@@ -1,0 +1,19 @@
+{
+    "name": "statistics-grabber-ui",
+    "version": "1.0.0",
+    "description": "Test",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ounique/StatisticsGrabberUI.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ounique/StatisticsGrabberUI/issues"
+    },
+    "homepage": "https://github.com/ounique/StatisticsGrabberUI#readme"
+}
