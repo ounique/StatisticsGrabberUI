@@ -1,0 +1,248 @@
+{
+    "models": [
+        {
+            "name": "ImpellerModel",
+            "description": "Модель импеллера",
+            "properties": [
+                {
+                    "name": "AirDencity",
+                    "description": "Плотность воздуха окружающей среды",
+                    "units": "кг/м^3"
+                },
+                {
+                    "name": "AirSpeed",
+                    "description": "Скорость воздушного потока",
+                    "units": "м/с"
+                },
+                {
+                    "name": "AmbientTemperature",
+                    "description": "Температура окружающей среды",
+                    "units": "°С"
+                }
+            ],
+            "inputs": [
+                {
+                    "name": "DestinationAngleSpeed",
+                    "description": "Заданная частота вращения двигателя",
+                    "units": "об/мин"
+                },
+                {
+                    "name": "SourceVoltage",
+                    "description": "Напряжение питания",
+                    "units": "В"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "AngleSpeed",
+                    "description": "Текущая частота вращения двигателя",
+                    "units": "об/мин"
+                },
+                {
+                    "name": "Power",
+                    "description": "Потребляемая мощность",
+                    "units": "Вт"
+                },
+                {
+                    "name": "Current",
+                    "description": "Действующий потребляемый ток",
+                    "units": "А"
+                },
+                {
+                    "name": "PhasesVoltages",
+                    "description": "Напряжения фаз",
+                    "units": ""
+                },
+                {
+                    "name": "PhasesCurents",
+                    "description": "Токи фаз",
+                    "units": ""
+                },
+                {
+                    "name": "Id",
+                    "description": "Продольный ток якоря",
+                    "units": "А"
+                },
+                {
+                    "name": "Iq",
+                    "description": "Поперечный ток якоря",
+                    "units": ""
+                },
+                {
+                    "name": "CPUTemperature",
+                    "description": "Температура платы инвертора",
+                    "units": "°С"
+                },
+                {
+                    "name": "SwitchesTempratures",
+                    "description": "Температура ключей",
+                    "units": ""
+                },
+                {
+                    "name": "TempSwHosts1",
+                    "description": "Температура самого горячего ключа",
+                    "units": "°С"
+                },
+                {
+                    "name": "NSwHosts1",
+                    "description": "Номер самого горячего ключа",
+                    "units": ""
+                },
+                {
+                    "name": "TempSwHosts2",
+                    "description": "Температура второго самого горячего ключа",
+                    "units": ""
+                },
+                {
+                    "name": "NSwHosts2",
+                    "description": "Номер второго самого горячего ключа",
+                    "units": ""
+                },
+                {
+                    "name": "TempSwAvg",
+                    "description": "Температура по ключам средняя",
+                    "units": ""
+                },
+                {
+                    "name": "WindingsTemperatures",
+                    "description": "Температура обмоток",
+                    "units": ""
+                },
+                {
+                    "name": "TempWMax",
+                    "description": "Максимальная температура обмотки",
+                    "units": "°С"
+                },
+                {
+                    "name": "TempWAvg",
+                    "description": "Средняя температура обмоток (U, V, W)",
+                    "units": "°С"
+                },
+                {
+                    "name": "MaxMaxSwitchTemperature",
+                    "description": "Максимальная температура ключа за все время моделирования",
+                    "units": "°С"
+                },
+                {
+                    "name": "MaxMaxWindingTemperature",
+                    "description": "Максимальная температура обмотки за все время моделирования",
+                    "units": "°С"
+                }
+            ]
+        },
+        {
+            "name": "RUModel",
+            "description": "Модель распределительного устройства",
+            "properties": [
+                {
+                    "name": "AmbientTemperature",
+                    "description": "Температура окружающей среды",
+                    "units": "°С"
+                }
+            ],
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "CPUTemperature",
+                    "description": "Температура модуля управления",
+                    "units": "°С"
+                }
+            ]
+        },
+        {
+            "name": "BMSModel",
+            "description": "Модель устройства для контроля состояния аккумуляторной батареи",
+            "properties": [
+                {
+                    "name": "Capacity",
+                    "description": "Емкость ячейки батареи",
+                    "units": "А⋅ч"
+                },
+                {
+                    "name": "CellVoltage",
+                    "description": "Напряжение ячейки",
+                    "units": "В"
+                }
+            ],
+            "inputs": [
+                {
+                    "name": "ConsumedCurrent",
+                    "description": "Ток потребления",
+                    "units": "А"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Voltage",
+                    "description": "Напряжение батареи",
+                    "units": "В"
+                },
+                {
+                    "name": "CellsVoltage",
+                    "description": "Напряжение ячеек",
+                    "units": "В"
+                },
+                {
+                    "name": "CellsAvgVoltage",
+                    "description": "Напряжение ячеек среднее",
+                    "units": "В"
+                },
+                {
+                    "name": "Current",
+                    "description": "Ток потребляемый",
+                    "units": "A"
+                },
+                {
+                    "name": "CellsTemperature",
+                    "description": "Температура ячеек",
+                    "units": "°С"
+                },
+                {
+                    "name": "BalanceTemperature",
+                    "description": "Температура балансира",
+                    "units": "°С"
+                },
+                {
+                    "name": "SwitchTemperature",
+                    "description": "Температура ключа",
+                    "units": "°С"
+                },
+                {
+                    "name": "BatteryMaxTemp",
+                    "description": "Максимальная температура ячейки",
+                    "units": "°С"
+                },
+                {
+                    "name": "BatteryMaxTempNumber",
+                    "description": "Номер ячейки с максимальной температурой",
+                    "units": ""
+                },
+                {
+                    "name": "CellMinVoltage",
+                    "description": "Минимальное напряжение ячейки",
+                    "units": "В"
+                },
+                {
+                    "name": "CellMinVoltageNumber",
+                    "description": "Номер ячейки с минимальным напряжением",
+                    "units": ""
+                },
+                {
+                    "name": "MaxDisplace",
+                    "description": "Максимальная разница между напряжениями ячеек",
+                    "units": "В"
+                },
+                {
+                    "name": "Qs",
+                    "description": "Заряд за последний сеанс работы",
+                    "units": "А⋅ч"
+                },
+                {
+                    "name": "Soc",
+                    "description": "Состояние заряженности",
+                    "units": "%"
+                }
+            ]
+        }
+    ]
+}
