@@ -4,19 +4,21 @@ import {CommonModule} from "@angular/common";
 import {SGMainRoutingModule} from "./main-routing.module";
 import {SGHeaderComponent} from "./modules/header/header.component";
 import {SGFooterComponent} from "./modules/footer/footer.component";
+import {SGOverviewComponent} from "./modules/overview/overview.component";
 
-const taigaModules: Type<any>[] = [];
+const tuiModules: Type<any>[] = [];
 
 const sgModules: Type<any>[] = [
     SGHeaderComponent,
     SGMainRoutingModule,
-    SGFooterComponent
+    SGFooterComponent,
+    SGOverviewComponent
 ];
 
 @NgModule({
     imports: [
         CommonModule,
-        ...taigaModules,
+        ...tuiModules,
         ...sgModules
     ],
     declarations: [
