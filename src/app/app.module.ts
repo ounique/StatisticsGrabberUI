@@ -1,23 +1,22 @@
 import {NgDompurifySanitizer} from "@tinkoff/ng-dompurify";
-import {TUI_SANITIZER, TuiAlertModule, TuiButtonModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
+import {TUI_SANITIZER, TuiAlertModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
-import {AppRoutingModule} from "./app-routing.module";
-import {AppComponent} from "./app.component";
+import {SGAppRoutingModule} from "./app-routing.module";
+import {SGAppComponent} from "./app.component";
 
 @NgModule({
     declarations: [
-        AppComponent
+        SGAppComponent
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule,
+        SGAppRoutingModule,
         BrowserAnimationsModule,
         TuiRootModule,
         TuiDialogModule,
-        TuiAlertModule,
-        TuiButtonModule
+        TuiAlertModule
     ],
     providers: [
         {
@@ -25,7 +24,7 @@ import {AppComponent} from "./app.component";
             useClass: NgDompurifySanitizer
         }
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [SGAppComponent]
 })
-export class AppModule {
+export class SGAppModule {
 }

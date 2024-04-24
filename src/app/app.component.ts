@@ -1,9 +1,11 @@
-import {Component} from "@angular/core";
+import {Component, HostBinding} from "@angular/core";
 
 @Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.less"]
+    selector: "sg-app",
+    templateUrl: "./app.component.html"
 })
-export class AppComponent {
+export class SGAppComponent {
+
+    @HostBinding()
+    private hostClass: boolean = true;
 }
