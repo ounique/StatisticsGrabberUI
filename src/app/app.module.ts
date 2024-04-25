@@ -5,6 +5,7 @@ import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {SGAppRoutingModule} from "./app-routing.module";
 import {SGAppComponent} from "./app.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -12,6 +13,7 @@ import {SGAppComponent} from "./app.component";
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         SGAppRoutingModule,
         BrowserAnimationsModule,
         TuiRootModule,

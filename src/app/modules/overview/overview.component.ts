@@ -1,6 +1,7 @@
 import {CommonModule} from "@angular/common";
 import {Component, HostBinding} from "@angular/core";
 import {TuiTabsModule} from "@taiga-ui/kit";
+import {SGBmsModelDeviceViewComponent} from "../bms-model-device-view/bms-model-device-view.component";
 
 @Component({
     selector: "sg-overview",
@@ -8,7 +9,8 @@ import {TuiTabsModule} from "@taiga-ui/kit";
     standalone: true,
     imports: [
         CommonModule,
-        TuiTabsModule
+        TuiTabsModule,
+        SGBmsModelDeviceViewComponent
     ]
 })
 export class SGOverviewComponent {
