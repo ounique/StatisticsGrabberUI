@@ -1,0 +1,17 @@
+{
+    "ts-node": {
+        "transpileOnly": true,
+        "ignore": [
+            "node_modules/(?!.*.mjs$)"
+        ]
+    },
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "commonjs",
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "sourceMap": true
+    }
+}
