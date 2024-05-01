@@ -1,9 +1,11 @@
 import {CommonModule} from "@angular/common";
 import {Component, HostBinding} from "@angular/core";
 import {SGDataService} from "../../services/data.service";
-import {interval, Observable, switchMap} from "rxjs";
+import {delay, interval, Observable, switchMap} from "rxjs";
 import {SGBmsModel} from "../../models/core/bms-model.model";
 import {SGParameterComponent} from "../parameter/parameter.component";
+import {SGAppService} from "../../state/app.service";
+import {SGAppQuery} from "../../state/app.query";
 
 @Component({
     selector: "sg-bms-model-device-view",
@@ -17,10 +19,13 @@ import {SGParameterComponent} from "../parameter/parameter.component";
 export class SGBmsModelDeviceViewComponent {
 
     // multiple calls
-    // public _data$: Observable<SGBmsModel> = interval(100)
+    // public _data$: Observable<SGBmsModel> = this.appQuery.select(state => state.timeout)
     //     .pipe(
-    //         switchMap(() => {
-    //             return this.service.getModelOutput();
+    //         switchMap((timeout: number) => {
+    //             return interval(timeout)
+    //                 .pipe(
+    //                     switchMap(() => this.service.getModelOutput())
+    //                 );
     //         })
     //     );
 
@@ -30,6 +35,7 @@ export class SGBmsModelDeviceViewComponent {
     @HostBinding("class.sg-bms-model-device-view")
     private hostClass: boolean = true;
 
-    constructor(private service: SGDataService) {
+    constructor(private service: SGDataService,
+                private appQuery: SGAppQuery) {
     }
 }
