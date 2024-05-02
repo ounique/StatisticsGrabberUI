@@ -1,11 +1,80 @@
 @import "../../common/colors.less";
+@import "./components/server-status.less";
 
 .sg-header {
+    position: relative;
     display: flex;
     flex: 1 1 auto;
     overflow: hidden;
-    min-height: 40px;
-    max-height: 40px;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 60px;
+    max-height: 60px;
     background-color: var(--tui-base-01);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1), 0px 3px 20px rgba(0, 0, 0, 0.03);
+    padding: 12px 24px;
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        padding: 4px 8px;
+
+        &:hover {
+            background: var(--tui-base-02);
+            cursor: pointer;
+        }
+
+        &-icon {
+            color: var(--tui-accent);
+        }
+
+        &-text {
+            line-height: 17px;
+            font-weight: bold;
+
+            &-container {
+                display: flex;
+                flex-direction: column;
+                margin-left: 12px;
+            }
+        }
+    }
+
+    &__toolset {
+        display: flex;
+        align-self: flex-end;
+
+        &-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            border-radius: 6px;
+            cursor: pointer;
+
+            &:hover {
+                background: var(--tui-base-02);
+            }
+
+            &-svg {
+                color: var(--tui-primary)
+            }
+        }
+
+        &-server-statuses {
+            display: flex;
+
+            & > *:not(:last-child) {
+                margin-right: 8px;
+            }
+        }
+
+        &-separator {
+            width: 1px;
+            background: var(--tui-base-03);
+            margin: 0 8px;
+        }
+    }
 }

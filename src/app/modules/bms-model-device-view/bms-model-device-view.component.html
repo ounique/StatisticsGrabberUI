@@ -1,5 +1,10 @@
 <div class="sg-bms-model-device-view__title">
-    <span>{{ "BMSModel" }}</span>
+    <tui-svg class="sg-bms-model-device-view__title-icon"
+             src="tuiIconZap">
+    </tui-svg>
+    <span class="sg-bms-model-device-view__title-text tui-text_body-s-2">
+        Батарея #{{ 1 }}
+    </span>
 </div>
 <div class="sg-bms-model-device-view__content"
      *ngIf="_data$ | async as data; else noData">

@@ -1,3 +1,41 @@
-<h1>Header</h1>
-<button (click)="_onClick()">Test123</button>
-<pre>{{ _timeout$ | async }}</pre>
+<div class="sg-header__logo">
+    <tui-svg class="sg-header__logo-icon"
+             src="tuiIconSlackLarge">
+    </tui-svg>
+    <div class="sg-header__logo-text-container tui-text_body-l">
+        <span class="sg-header__logo-text">
+            Devices
+        </span>
+        <span class="sg-header__logo-text">
+            Monitoring
+        </span>
+    </div>
+</div>
+
+<div class="sg-header__toolset">
+    <div class="sg-header__toolset-server-statuses">
+        <sg-server-status *ngFor="let i of [1, 2, 3, 4];"
+                           [serverNumber]="i">
+        </sg-server-status>
+    </div>
+    <div class="sg-header__toolset-separator"></div>
+    <div class="sg-header__toolset-icon">
+        <tui-svg class="sg-header__toolset-icon-svg"
+                 src="tuiIconSettings">
+        </tui-svg>
+    </div>
+    <div class="sg-header__toolset-icon"
+         (click)="_onAboutClick()"
+    >
+        <tui-svg class="sg-header__toolset-icon-svg"
+                 src="tuiIconAlertCircle">
+        </tui-svg>
+    </div>
+</div>
+
+<!--<button (click)="_onClick()">Test123</button>-->
+<!--<pre>{{ _timeout$ | async }}</pre>-->
+
+<ng-template #aboutTemplate>
+    <sg-about></sg-about>
+</ng-template>

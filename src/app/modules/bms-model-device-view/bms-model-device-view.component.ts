@@ -6,6 +6,7 @@ import {SGBmsModel} from "../../models/core/bms-model.model";
 import {SGParameterComponent} from "../parameter/parameter.component";
 import {SGAppService} from "../../state/app.service";
 import {SGAppQuery} from "../../state/app.query";
+import {TuiSvgModule} from "@taiga-ui/core";
 
 @Component({
     selector: "sg-bms-model-device-view",
@@ -13,7 +14,8 @@ import {SGAppQuery} from "../../state/app.query";
     standalone: true,
     imports: [
         CommonModule,
-        SGParameterComponent
+        SGParameterComponent,
+        TuiSvgModule
     ]
 })
 export class SGBmsModelDeviceViewComponent {

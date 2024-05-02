@@ -1,19 +1,16 @@
-<div class="sg-overview__toolbar">
-    <div class="sg-overview__toolbar-left">
-        <div class="sg-overview__toolbar-left-text">
-            <h4 class="sg-overview__toolbar-left-title">Overview</h4>
-            <h5 class="sg-overview__toolbar-left-subtitle">Some description</h5>
-        </div>
-    </div>
-    <div class="sg-overview__toolbar-right"></div>
-</div>
-<tui-tabs tuiFade>
-    <button tuiTab>Devices View</button>
-    <button tuiTab>Charts View</button>
+<tui-tabs
+    class="sg-overview__tabs"
+    [(activeItemIndex)]="_activeTabIndex"
+    tuiFade
+>
+    <button tuiTab>
+        Devices View
+    </button>
+    <button tuiTab>
+        Charts View
+    </button>
 </tui-tabs>
 <div class="sg-overview__content">
-    <sg-bms-model-device-view></sg-bms-model-device-view>
-<!--    <sg-bms-model-device-view></sg-bms-model-device-view>-->
-<!--    <sg-bms-model-device-view></sg-bms-model-device-view>-->
-<!--    <sg-bms-model-device-view></sg-bms-model-device-view>-->
+    <sg-devices-grid [class._hidden]="_activeTabIndex !== 0"></sg-devices-grid>
+    <sg-charts-grid [class._hidden]="_activeTabIndex !== 1"></sg-charts-grid>
 </div>
