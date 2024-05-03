@@ -1,4 +1,21 @@
-<span class="sg-server-status__text"
-      [class._available]="_serverStatus$ | async">
-    Сервер #{{ serverNumber }}
-</span>
+<div
+    class="sg-server-status__wrapper"
+    [class._success]="true"
+    [class._error]="false"
+>
+    <ng-template [ngTemplateOutlet]="true ? successTemplate : errorTemplate"></ng-template>
+</div>
+<ng-template #successTemplate>
+    <tui-svg class="sg-server-status__template-icon"
+             src="tuiIconCheck">
+    </tui-svg>
+    <span class="sg-server-status__template-text">
+        Сервера доступны
+    </span>
+</ng-template>
+
+<ng-template #errorTemplate>
+    <span class="sg-server-status__template-text">
+        Настройте сервера
+    </span>
+</ng-template>

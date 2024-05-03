@@ -1,4 +1,8 @@
 {
+    "defaultTimeout": 500,
+    "server": {
+        "url": "http://localhost:3000"
+    },
     "models": [
         {
             "name": "ImpellerModel",

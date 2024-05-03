@@ -5,26 +5,32 @@
     display: flex;
     align-items: center;
     height: 32px;
-    padding: 4px 8px;
-    background: var(--tui-base-02);
     border-radius: 6px;
+    overflow: hidden;
 
-    &__text {
+    &__wrapper {
+        position: relative;
         display: flex;
-        align-items: center;
+        flex: 1 1 auto;
+        height: 100%;
+        overflow: hidden;
+        padding: 4px 8px;
+        background: var(--tui-success-fill);
+        color: var(--tui-base-01);
+        pointer-events: none;
+        cursor: default;
 
-        &:before {
-            position: relative;
-            content: "";
-            margin-right: 4px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
+        &._error {
             background: var(--tui-error-fill);
+            color: var(--tui-base-01);
+            cursor: pointer;
         }
+    }
 
-        &._available:before {
-            background: var(--tui-success-fill);
+    &__template {
+        &-text {
+            display: flex;
+            align-items: center;
         }
     }
 }

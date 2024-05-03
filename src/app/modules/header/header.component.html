@@ -13,10 +13,12 @@
 </div>
 
 <div class="sg-header__toolset">
+    <div class="sg-header__toolset-application-status">
+        <sg-application-status></sg-application-status>
+    </div>
+    <div class="sg-header__toolset-separator"></div>
     <div class="sg-header__toolset-server-statuses">
-        <sg-server-status *ngFor="let i of [1, 2, 3, 4];"
-                           [serverNumber]="i">
-        </sg-server-status>
+        <sg-server-status></sg-server-status>
     </div>
     <div class="sg-header__toolset-separator"></div>
     <div class="sg-header__toolset-icon">

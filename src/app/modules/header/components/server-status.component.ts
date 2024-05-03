@@ -2,17 +2,19 @@ import {Component, HostBinding, Input, OnChanges, SimpleChanges} from "@angular/
 import {CommonModule} from "@angular/common";
 import {SGAppQuery} from "../../../state/app.query";
 import {Observable} from "rxjs";
+import {SGServerStatus} from "../../../models/core/server.model";
+import {TuiSvgModule} from "@taiga-ui/core";
 
 @Component({
     selector: "sg-server-status",
     templateUrl: "./server-status.component.html",
     standalone: true,
-    imports: [CommonModule]
+    imports: [CommonModule, TuiSvgModule]
 })
 export class SGServerStatusComponent implements OnChanges {
 
     @Input()
-    public serverNumber: number;
+    public status: SGServerStatus;
 
     public _serverStatus$: Observable<boolean>;
 
@@ -23,6 +25,6 @@ export class SGServerStatusComponent implements OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        this._serverStatus$ = this.appQuery.select(state => state.serverStatuses[this.serverNumber]);
+        // this._serverStatus$ = this.appQuery.select(state => state.serverStatuses[this.serverNumber]);
     }
 }

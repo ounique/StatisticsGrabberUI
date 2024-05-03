@@ -14,5 +14,4 @@ export class SGDataService {
     public getModelOutput(): Observable<SGBmsModel> {
         return this.http.get<SGBmsModel>("http://localhost:3000/api/model/bmsModel");
     }
-
 }

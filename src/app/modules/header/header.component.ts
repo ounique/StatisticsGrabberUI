@@ -6,12 +6,13 @@ import {Observable} from "rxjs";
 import {TuiDialogService, TuiSvgModule} from "@taiga-ui/core";
 import {SGServerStatusComponent} from "./components/server-status.component";
 import {SGAboutComponent} from "../about/about.component";
+import {SGApplicationStatusComponent} from "./components/application-status.component";
 
 @Component({
     selector: "sg-header",
     templateUrl: "./header.component.html",
     standalone: true,
-    imports: [CommonModule, TuiSvgModule, SGServerStatusComponent, SGAboutComponent]
+    imports: [CommonModule, TuiSvgModule, SGServerStatusComponent, SGAboutComponent, SGApplicationStatusComponent]
 })
 export class SGHeaderComponent {
 

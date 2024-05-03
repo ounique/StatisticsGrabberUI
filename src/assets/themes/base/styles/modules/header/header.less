@@ -1,5 +1,6 @@
 @import "../../common/colors.less";
 @import "./components/server-status.less";
+@import "./components/application-status.less";
 
 .sg-header {
     position: relative;
@@ -61,6 +62,10 @@
             &-svg {
                 color: var(--tui-primary)
             }
+        }
+
+        &-application-status {
+            display: flex;
         }
 
         &-server-statuses {
