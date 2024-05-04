@@ -4,13 +4,21 @@
     tuiFade
 >
     <button tuiTab>
-        Devices View
+        Устройства
     </button>
     <button tuiTab>
-        Charts View
+        Графики
     </button>
 </tui-tabs>
 <div class="sg-overview__content">
-    <sg-devices-grid [class._hidden]="_activeTabIndex !== 0"></sg-devices-grid>
-    <sg-charts-grid [class._hidden]="_activeTabIndex !== 1"></sg-charts-grid>
+    <sg-devices-grid
+        class="sg-overview__content-item"
+        [class._hidden]="_activeTabIndex !== 0"
+    >
+    </sg-devices-grid>
+    <sg-charts-grid
+        class="sg-overview__content-item"
+        [class._hidden]="_activeTabIndex !== 1"
+    >
+    </sg-charts-grid>
 </div>

@@ -1,9 +1,10 @@
 import {CommonModule} from "@angular/common";
-import {Component, HostBinding} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding} from "@angular/core";
 
 @Component({
     selector: "sg-about",
     templateUrl: "./about.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CommonModule

@@ -1,9 +1,10 @@
-import {Component, HostBinding} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
 @Component({
     selector: "sg-footer",
     templateUrl: "./footer.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [CommonModule]
 })

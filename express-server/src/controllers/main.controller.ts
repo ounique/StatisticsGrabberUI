@@ -2,14 +2,29 @@ import {Request, Response} from "express";
 import {SGMockController, SGMockControllerMethod, SGMockRequest} from "../decorators/controller.decorator";
 import {SGBmsModel} from "../../../src/app/models/core/bms-model.model";
 import {SGMockDataGeneratorUtil} from "../utils/generator.util";
+import {SGServerApplicationStatus, SGServerStatus} from "../../../src/app/models/core/server.model";
 
 @SGMockController({
-    path: "/api/model"
+    path: "/api"
 })
 export class SGMainController {
 
     @SGMockRequest({
-        path: "/bmsModel",
+        path: "/health",
+        method: SGMockControllerMethod.GET
+    })
+    private healthCheck(request: Request, response: Response): void {
+        response.status(200).json(<SGServerStatus>{
+            applicationStatus: SGServerApplicationStatus.IDLE,
+            server1: true,
+            server2: false,
+            server3: true,
+            server4: true
+        })
+    }
+
+    @SGMockRequest({
+        path: "/model/bmsModel",
         method: SGMockControllerMethod.GET
     })
     private getBMSModelResponse(request: Request, response: Response): void {

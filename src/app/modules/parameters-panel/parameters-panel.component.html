@@ -1,0 +1,6 @@
+<sg-parameter
+    *ngFor="let parameter of config.parameters;"
+    [icon]="parameter.icon"
+    [unit]="parameter.unit"
+    [value]="value[parameter.fieldKey]">
+</sg-parameter>

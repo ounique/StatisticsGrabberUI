@@ -1,10 +1,13 @@
 <div
     class="sg-server-status__wrapper"
-    [class._success]="true"
-    [class._error]="false"
->
-    <ng-template [ngTemplateOutlet]="true ? successTemplate : errorTemplate"></ng-template>
+    *ngIf="{ isAllServersUp: _isAllServersUp$ | async } as pageData"
+    [class._success]="pageData.isAllServersUp"
+    [class._error]="!pageData.isAllServersUp"
+    [tuiHint]="pageData.isAllServersUp ? null : errorPopupTemplate"
+    tuiHintAppearance="onDark">
+    <ng-template [ngTemplateOutlet]="pageData.isAllServersUp ? successTemplate : errorTemplate"></ng-template>
 </div>
+
 <ng-template #successTemplate>
     <tui-svg class="sg-server-status__template-icon"
              src="tuiIconCheck">
@@ -15,7 +18,45 @@
 </ng-template>
 
 <ng-template #errorTemplate>
+    <tui-svg class="sg-server-status__template-icon"
+             src="tuiIconAlertTriangle">
+    </tui-svg>
     <span class="sg-server-status__template-text">
         Настройте сервера
     </span>
+</ng-template>
+
+<ng-template #errorPopupTemplate>
+    <div class="sg-server-status__template-popup"
+         *ngIf="_serverStatus$ | async as serverStatuses">
+        <div class="sg-server-status__template-popup-title">
+            <span class="sg-server-status__template-popup-title-text tui-text_body-m">
+                Состояние серверов:
+            </span>
+        </div>
+        <div class="sg-server-status__template-popup-item"
+             [class._error]="!serverStatuses.server1">
+            <span class="sg-server-status__template-popup-item-text tui-text_body-s">
+                Сервер #1
+            </span>
+        </div>
+        <div class="sg-server-status__template-popup-item"
+             [class._error]="!serverStatuses.server2">
+            <span class="sg-server-status__template-popup-item-text tui-text_body-s">
+                Сервер #2
+            </span>
+        </div>
+        <div class="sg-server-status__template-popup-item"
+             [class._error]="!serverStatuses.server3">
+            <span class="sg-server-status__template-popup-item-text tui-text_body-s">
+                Сервер #3
+            </span>
+        </div>
+        <div class="sg-server-status__template-popup-item"
+             [class._error]="!serverStatuses.server4">
+            <span class="sg-server-status__template-popup-item-text tui-text_body-s">
+                Сервер #4
+            </span>
+        </div>
+    </div>
 </ng-template>

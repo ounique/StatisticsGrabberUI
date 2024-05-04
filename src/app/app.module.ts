@@ -8,6 +8,8 @@ import {SGAppComponent} from "./app.component";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {appBootstrap} from "./app.bootstrap";
 import {SGAppConfigDataService} from "./services/app-config.service";
+import {SGHealthDataService} from "./services/health.service";
+import {SGAppService} from "./state/app.service";
 
 @NgModule({
     declarations: [
@@ -32,7 +34,9 @@ import {SGAppConfigDataService} from "./services/app-config.service";
             useFactory: appBootstrap,
             deps: [
                 HttpClient,
-                SGAppConfigDataService
+                SGAppConfigDataService,
+                SGHealthDataService,
+                SGAppService
             ],
             multi: true
         }

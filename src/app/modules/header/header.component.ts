@@ -1,4 +1,12 @@
-import {Component, HostBinding, Inject, TemplateRef, ViewChild, ViewChildren} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    HostBinding,
+    Inject,
+    TemplateRef,
+    ViewChild,
+    ViewChildren
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {SGAppQuery} from "../../state/app.query";
 import {SGAppService} from "../../state/app.service";
@@ -11,6 +19,7 @@ import {SGApplicationStatusComponent} from "./components/application-status.comp
 @Component({
     selector: "sg-header",
     templateUrl: "./header.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [CommonModule, TuiSvgModule, SGServerStatusComponent, SGAboutComponent, SGApplicationStatusComponent]
 })

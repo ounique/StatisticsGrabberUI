@@ -8,11 +8,11 @@
 </div>
 <div class="sg-bms-model-device-view__content"
      *ngIf="_data$ | async as data; else noData">
-    <sg-parameter
-        [icon]="''"
-        [unit]="'A'"
-        [value]="data.cellMinVoltage">
-    </sg-parameter>
+    <sg-parameters-panel
+        [config]="_parametersPanelConfig"
+        [value]="data"
+    >
+    </sg-parameters-panel>
 </div>
 
 <ng-template #noData>

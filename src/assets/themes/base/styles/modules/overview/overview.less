@@ -18,9 +18,16 @@
 
     &__content {
         display: flex;
+        flex-direction: column;
         flex: 1 1 auto;
         overflow: hidden;
-        flex-direction: column;
-        padding: 24px 12px 0 12px;
+
+        &-item {
+
+            &._hidden {
+                visibility: hidden;
+                height: 0;
+            }
+        }
     }
 }

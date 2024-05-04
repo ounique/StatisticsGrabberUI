@@ -3,6 +3,11 @@
     "server": {
         "url": "http://localhost:3000"
     },
+    "numberFormat": {
+        "thousandsDelimiter": ",",
+        "precision": 2,
+        "decimalDelimiter": "."
+    },
     "models": [
         {
             "name": "ImpellerModel",
@@ -158,91 +163,91 @@
             "description": "Модель устройства для контроля состояния аккумуляторной батареи",
             "properties": [
                 {
-                    "name": "Capacity",
+                    "name": "capacity",
                     "description": "Емкость ячейки батареи",
                     "units": "А⋅ч"
                 },
                 {
-                    "name": "CellVoltage",
+                    "name": "cellVoltage",
                     "description": "Напряжение ячейки",
                     "units": "В"
                 }
             ],
             "inputs": [
                 {
-                    "name": "ConsumedCurrent",
+                    "name": "consumedCurrent",
                     "description": "Ток потребления",
                     "units": "А"
                 }
             ],
             "outputs": [
                 {
-                    "name": "Voltage",
+                    "name": "voltage",
                     "description": "Напряжение батареи",
                     "units": "В"
                 },
                 {
-                    "name": "CellsVoltage",
+                    "name": "cellsVoltage",
                     "description": "Напряжение ячеек",
                     "units": "В"
                 },
                 {
-                    "name": "CellsAvgVoltage",
+                    "name": "cellsAvgVoltage",
                     "description": "Напряжение ячеек среднее",
                     "units": "В"
                 },
                 {
-                    "name": "Current",
+                    "name": "current",
                     "description": "Ток потребляемый",
                     "units": "A"
                 },
                 {
-                    "name": "CellsTemperature",
+                    "name": "cellsTemperature",
                     "description": "Температура ячеек",
                     "units": "°С"
                 },
                 {
-                    "name": "BalanceTemperature",
+                    "name": "balanceTemperature",
                     "description": "Температура балансира",
                     "units": "°С"
                 },
                 {
-                    "name": "SwitchTemperature",
+                    "name": "switchTemperature",
                     "description": "Температура ключа",
                     "units": "°С"
                 },
                 {
-                    "name": "BatteryMaxTemp",
+                    "name": "batteryMaxTemp",
                     "description": "Максимальная температура ячейки",
                     "units": "°С"
                 },
                 {
-                    "name": "BatteryMaxTempNumber",
+                    "name": "batteryMaxTempNumber",
                     "description": "Номер ячейки с максимальной температурой",
                     "units": ""
                 },
                 {
-                    "name": "CellMinVoltage",
+                    "name": "cellMinVoltage",
                     "description": "Минимальное напряжение ячейки",
                     "units": "В"
                 },
                 {
-                    "name": "CellMinVoltageNumber",
+                    "name": "cellMinVoltageNumber",
                     "description": "Номер ячейки с минимальным напряжением",
                     "units": ""
                 },
                 {
-                    "name": "MaxDisplace",
+                    "name": "maxDisplace",
                     "description": "Максимальная разница между напряжениями ячеек",
                     "units": "В"
                 },
                 {
-                    "name": "Qs",
+                    "name": "qs",
                     "description": "Заряд за последний сеанс работы",
                     "units": "А⋅ч"
                 },
                 {
-                    "name": "Soc",
+                    "name": "soc",
                     "description": "Состояние заряженности",
                     "units": "%"
                 }

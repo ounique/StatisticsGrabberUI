@@ -23,6 +23,7 @@
         &._error {
             background: var(--tui-error-fill);
             color: var(--tui-base-01);
+            pointer-events: auto;
             cursor: pointer;
         }
     }
@@ -31,6 +32,55 @@
         &-text {
             display: flex;
             align-items: center;
+        }
+
+        &-icon {
+            margin-right: 4px;
+        }
+
+        &-popup {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            flex: 1 1 auto;
+            overflow: hidden;
+            max-width: 240px;
+
+            &-title {
+                display: flex;
+                margin-bottom: 12px;
+            }
+
+            &-item {
+                position: relative;
+                display: flex;
+                align-items: center;
+                width: calc(240px / 2 - 8px);
+                padding: 4px 8px;
+                margin: 4px;
+                background: var(--tui-base-02);
+                border-radius: 6px;
+                overflow: hidden;
+                height: 32px;
+
+                &:before {
+                    position: relative;
+                    content: "";
+                    margin-right: 4px;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background: var(--tui-success-fill);
+                }
+
+                &._error:before {
+                    background: var(--tui-error-fill);
+                }
+
+                &-text {
+                    line-height: 0;
+                }
+            }
         }
     }
 }

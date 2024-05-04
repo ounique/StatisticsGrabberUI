@@ -1,8 +1,9 @@
-import {Component, HostBinding} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding} from "@angular/core";
 
 @Component({
     selector: "sg-main",
-    templateUrl: "main.component.html"
+    templateUrl: "main.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SGMainComponent {
 

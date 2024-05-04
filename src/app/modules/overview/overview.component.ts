@@ -1,5 +1,5 @@
 import {CommonModule} from "@angular/common";
-import {Component, HostBinding} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding} from "@angular/core";
 import {TuiTabsModule} from "@taiga-ui/kit";
 import {SGBmsModelDeviceViewComponent} from "../bms-model-device-view/bms-model-device-view.component";
 import {SGChartsGridComponent} from "../charts-grid/charts-grid.component";
@@ -8,6 +8,7 @@ import {SGDevicesGridComponent} from "../devices-grid/devices-grid.component";
 @Component({
     selector: "sg-overview",
     templateUrl: "./overview.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CommonModule,

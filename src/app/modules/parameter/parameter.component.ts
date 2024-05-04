@@ -1,10 +1,11 @@
 import {CommonModule} from "@angular/common";
-import {Component, HostBinding, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, Input} from "@angular/core";
 import {TuiSvgModule} from "@taiga-ui/core";
 
 @Component({
     selector: "sg-parameter",
     templateUrl: "./parameter.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CommonModule,
