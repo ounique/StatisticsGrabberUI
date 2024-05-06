@@ -1,6 +1,15 @@
-<sg-parameter
-    *ngFor="let parameter of config.parameters;"
-    [icon]="parameter.icon"
-    [unit]="parameter.unit"
-    [value]="value[parameter.fieldKey]">
-</sg-parameter>
+<div class="sg-parameters-panel__title"
+     *ngIf="title">
+    <span class="sg-parameters-panel__title-text">
+        {{ title }}
+    </span>
+</div>
+<div class="sg-parameters-panel__container">
+    <sg-parameter
+        class="sg-parameters-panel__parameter"
+        *ngFor="let parameter of config.parameters;"
+        [icon]="parameter.icon"
+        [unit]="parameter.unit"
+        [value]="value[parameter.fieldKey]">
+    </sg-parameter>
+</div>

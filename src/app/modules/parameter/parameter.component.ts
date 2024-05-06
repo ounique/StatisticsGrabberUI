@@ -1,6 +1,7 @@
 import {CommonModule} from "@angular/common";
 import {ChangeDetectionStrategy, Component, HostBinding, Input} from "@angular/core";
 import {TuiSvgModule} from "@taiga-ui/core";
+import {SGNumberPipe} from "../../pipes/number/number.pipe";
 
 @Component({
     selector: "sg-parameter",
@@ -9,7 +10,8 @@ import {TuiSvgModule} from "@taiga-ui/core";
     standalone: true,
     imports: [
         CommonModule,
-        TuiSvgModule
+        TuiSvgModule,
+        SGNumberPipe
     ]
 })
 export class SGParameterComponent {

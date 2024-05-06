@@ -3,6 +3,7 @@ import {SGMockController, SGMockControllerMethod, SGMockRequest} from "../decora
 import {SGBmsModel} from "../../../src/app/models/core/bms-model.model";
 import {SGMockDataGeneratorUtil} from "../utils/generator.util";
 import {SGServerApplicationStatus, SGServerStatus} from "../../../src/app/models/core/server.model";
+import {SGRuModel} from "../../../src/app/models/core/ru-model.model";
 
 @SGMockController({
     path: "/api"
@@ -43,6 +44,16 @@ export class SGMainController {
             maxDisplace: SGMockDataGeneratorUtil.generateDouble(0, 10000),
             qs: SGMockDataGeneratorUtil.generateDouble(0, 10000),
             soc: SGMockDataGeneratorUtil.generateDouble(0, 10000)
+        });
+    }
+
+    @SGMockRequest({
+        path: "/model/ruModel",
+        method: SGMockControllerMethod.GET
+    })
+    private getRuModelResponse(request: Request, response: Response): void {
+        response.status(200).json(<SGRuModel>{
+            cpuTemperature: SGMockDataGeneratorUtil.generateDouble(0, 200)
         });
     }
 }

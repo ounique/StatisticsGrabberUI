@@ -9,6 +9,9 @@ import {ChangeDetectionStrategy, Component, HostBinding, Input} from "@angular/c
 export class SGParametersPanelComponent<T> {
 
     @Input()
+    public title: string;
+
+    @Input()
     public config: SGParametersPanelConfiguration;
 
     @Input()

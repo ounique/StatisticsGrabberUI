@@ -1,7 +1,14 @@
 export interface SGConfig {
     readonly defaultTimeout: number;
+    readonly numberFormat: SGConfigNumberFormat;
     readonly server: SGServerConfig;
     readonly models: SGModelsConfig[];
+}
+
+export interface SGConfigNumberFormat {
+    readonly thousandsDelimiter: string;
+    readonly precision: number;
+    readonly decimalDelimiter: string;
 }
 
 export interface SGServerConfig {
