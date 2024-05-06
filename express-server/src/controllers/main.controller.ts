@@ -1,14 +1,14 @@
 import {Request, Response} from "express";
 import {SGMockController, SGMockControllerMethod, SGMockRequest} from "../decorators/controller.decorator";
-import {SGBmsModel} from "../../../src/app/models/core/bms-model.model";
-import {SGMockDataGeneratorUtil} from "../utils/generator.util";
 import {SGServerApplicationStatus, SGServerStatus} from "../../../src/app/models/core/server.model";
-import {SGRuModel} from "../../../src/app/models/core/ru-model.model";
+import {SGMockMainService} from "../services/main.service";
 
 @SGMockController({
     path: "/api"
 })
 export class SGMainController {
+
+    public mockMainService: SGMockMainService = new SGMockMainService();
 
     @SGMockRequest({
         path: "/health",
@@ -25,35 +25,12 @@ export class SGMainController {
     }
 
     @SGMockRequest({
-        path: "/model/bmsModel",
+        path: "/output",
         method: SGMockControllerMethod.GET
     })
-    private getBMSModelResponse(request: Request, response: Response): void {
-        response.status(200).json(<SGBmsModel>{
-            voltage: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            cellsVoltage: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            cellsAvgVoltage: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            current: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            cellsTemperature: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            balanceTemperature: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            switchTemperature: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            batteryMaxTemp: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            batteryMaxTempNumber: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            cellMinVoltage: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            cellMinVoltageNumber: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            maxDisplace: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            qs: SGMockDataGeneratorUtil.generateDouble(0, 10000),
-            soc: SGMockDataGeneratorUtil.generateDouble(0, 10000)
-        });
-    }
-
-    @SGMockRequest({
-        path: "/model/ruModel",
-        method: SGMockControllerMethod.GET
-    })
-    private getRuModelResponse(request: Request, response: Response): void {
-        response.status(200).json(<SGRuModel>{
-            cpuTemperature: SGMockDataGeneratorUtil.generateDouble(0, 200)
-        });
+    private getModelsOutputResponse(request: Request, response: Response): void {
+        response.status(200).json(
+            this.mockMainService.getModelsOutput()
+        );
     }
 }

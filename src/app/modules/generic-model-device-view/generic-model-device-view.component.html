@@ -1,29 +1,29 @@
 <div class="sg-bms-model-device-view__title">
     <tui-svg class="sg-bms-model-device-view__title-icon"
-             src="tuiIconZap">
+             [src]="config.icon">
     </tui-svg>
     <span class="sg-bms-model-device-view__title-text tui-text_body-s-2">
-        Распределительное Устройство
+        {{ config.title }}
     </span>
 </div>
 <div class="sg-bms-model-device-view__content"
-     *ngIf="_data$ | async as data; else noData">
+     *ngIf="data; else noData">
     <sg-parameters-panel
         [title]="'Вход'"
         [config]="_inputParametersPanelConfig"
-        [value]="data"
+        [value]="data.input"
     >
     </sg-parameters-panel>
     <sg-parameters-panel
         [title]="'Параметры'"
         [config]="_propertiesParametersPanelConfig"
-        [value]="data"
+        [value]="data.parameters"
     >
     </sg-parameters-panel>
     <sg-parameters-panel
         [title]="'Выходы'"
         [config]="_outputParametersPanelConfig"
-        [value]="data"
+        [value]="data.output"
     >
     </sg-parameters-panel>
 </div>

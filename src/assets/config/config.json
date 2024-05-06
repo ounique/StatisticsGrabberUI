@@ -14,126 +14,126 @@
             "description": "Модель импеллера",
             "properties": [
                 {
-                    "name": "AirDencity",
+                    "name": "airDencity",
                     "description": "Плотность воздуха окружающей среды",
                     "units": "кг/м^3"
                 },
                 {
-                    "name": "AirSpeed",
+                    "name": "airSpeed",
                     "description": "Скорость воздушного потока",
                     "units": "м/с"
                 },
                 {
-                    "name": "AmbientTemperature",
+                    "name": "ambientTemperature",
                     "description": "Температура окружающей среды",
                     "units": "°С"
                 }
             ],
             "inputs": [
                 {
-                    "name": "DestinationAngleSpeed",
+                    "name": "destinationAngleSpeed",
                     "description": "Заданная частота вращения двигателя",
                     "units": "об/мин"
                 },
                 {
-                    "name": "SourceVoltage",
+                    "name": "sourceVoltage",
                     "description": "Напряжение питания",
                     "units": "В"
                 }
             ],
             "outputs": [
                 {
-                    "name": "AngleSpeed",
+                    "name": "angleSpeed",
                     "description": "Текущая частота вращения двигателя",
                     "units": "об/мин"
                 },
                 {
-                    "name": "Power",
+                    "name": "power",
                     "description": "Потребляемая мощность",
                     "units": "Вт"
                 },
                 {
-                    "name": "Current",
+                    "name": "current",
                     "description": "Действующий потребляемый ток",
                     "units": "А"
                 },
                 {
-                    "name": "PhasesVoltages",
+                    "name": "phasesVoltages",
                     "description": "Напряжения фаз",
                     "units": ""
                 },
                 {
-                    "name": "PhasesCurents",
+                    "name": "phasesCurents",
                     "description": "Токи фаз",
                     "units": ""
                 },
                 {
-                    "name": "Id",
+                    "name": "id",
                     "description": "Продольный ток якоря",
                     "units": "А"
                 },
                 {
-                    "name": "Iq",
+                    "name": "iq",
                     "description": "Поперечный ток якоря",
                     "units": ""
                 },
                 {
-                    "name": "CPUTemperature",
+                    "name": "cpuTemperature",
                     "description": "Температура платы инвертора",
                     "units": "°С"
                 },
                 {
-                    "name": "SwitchesTempratures",
+                    "name": "switchesTempratures",
                     "description": "Температура ключей",
                     "units": ""
                 },
                 {
-                    "name": "TempSwHosts1",
+                    "name": "tempSwHosts1",
                     "description": "Температура самого горячего ключа",
                     "units": "°С"
                 },
                 {
-                    "name": "NSwHosts1",
+                    "name": "nSwHosts1",
                     "description": "Номер самого горячего ключа",
                     "units": ""
                 },
                 {
-                    "name": "TempSwHosts2",
+                    "name": "tempSwHosts2",
                     "description": "Температура второго самого горячего ключа",
                     "units": ""
                 },
                 {
-                    "name": "NSwHosts2",
+                    "name": "nSwHosts2",
                     "description": "Номер второго самого горячего ключа",
                     "units": ""
                 },
                 {
-                    "name": "TempSwAvg",
+                    "name": "tempSwAvg",
                     "description": "Температура по ключам средняя",
                     "units": ""
                 },
                 {
-                    "name": "WindingsTemperatures",
+                    "name": "windingsTemperatures",
                     "description": "Температура обмоток",
                     "units": ""
                 },
                 {
-                    "name": "TempWMax",
+                    "name": "tempWMax",
                     "description": "Максимальная температура обмотки",
                     "units": "°С"
                 },
                 {
-                    "name": "TempWAvg",
+                    "name": "tempWAvg",
                     "description": "Средняя температура обмоток (U, V, W)",
                     "units": "°С"
                 },
                 {
-                    "name": "MaxMaxSwitchTemperature",
+                    "name": "maxMaxSwitchTemperature",
                     "description": "Максимальная температура ключа за все время моделирования",
                     "units": "°С"
                 },
                 {
-                    "name": "MaxMaxWindingTemperature",
+                    "name": "maxMaxWindingTemperature",
                     "description": "Максимальная температура обмотки за все время моделирования",
                     "units": "°С"
                 }
@@ -144,7 +144,7 @@
             "description": "Модель распределительного устройства",
             "properties": [
                 {
-                    "name": "AmbientTemperature",
+                    "name": "ambientTemperature",
                     "description": "Температура окружающей среды",
                     "units": "°С"
                 }
@@ -152,7 +152,7 @@
             "inputs": [],
             "outputs": [
                 {
-                    "name": "CPUTemperature",
+                    "name": "cpuTemperature",
                     "description": "Температура модуля управления",
                     "units": "°С"
                 }

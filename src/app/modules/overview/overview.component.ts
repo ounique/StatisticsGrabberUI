@@ -1,9 +1,11 @@
 import {CommonModule} from "@angular/common";
 import {ChangeDetectionStrategy, Component, HostBinding} from "@angular/core";
 import {TuiTabsModule} from "@taiga-ui/kit";
-import {SGBmsModelDeviceViewComponent} from "../bms-model-device-view/bms-model-device-view.component";
 import {SGChartsGridComponent} from "../charts-grid/charts-grid.component";
 import {SGDevicesGridComponent} from "../devices-grid/devices-grid.component";
+import {Observable} from "rxjs";
+import {SGModelsOutput} from "../../models/core/models-status.model";
+import {SGOverviewService} from "./services/overview.service";
 
 @Component({
     selector: "sg-overview",
@@ -13,18 +15,22 @@ import {SGDevicesGridComponent} from "../devices-grid/devices-grid.component";
     imports: [
         CommonModule,
         TuiTabsModule,
-        SGBmsModelDeviceViewComponent,
         SGChartsGridComponent,
         SGDevicesGridComponent
+    ],
+    providers: [
+        SGOverviewService
     ]
 })
 export class SGOverviewComponent {
+
+    public _data$: Observable<SGModelsOutput> = this.service.getModelsOutput();
 
     public _activeTabIndex: number = 0;
 
     @HostBinding("class.sg-overview")
     private hostClass: boolean = true;
 
-    constructor() {
+    constructor(private service: SGOverviewService) {
     }
 }

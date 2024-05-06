@@ -1,11 +1,36 @@
 <div class="sg-devices-grid__row">
-    <sg-ru-model-device-view></sg-ru-model-device-view>
-    <sg-bms-model-device-view></sg-bms-model-device-view>
+    <sg-generic-model-device-view
+        *ngFor="let modelData of data.leftWing.ru;"
+        modelName="RUModel"
+        [config]="{
+            title: 'RUModel',
+            icon: 'tuiIconAirplay'
+        }"
+        [data]="modelData"
+    ></sg-generic-model-device-view>
+    <sg-generic-model-device-view
+        *ngFor="let modelData of data.leftWing.bms;"
+        modelName="BMSModel"
+        [config]="{
+            title: 'BMSModel',
+            icon: 'tuiIconAirplay'
+        }"
+        [data]="modelData"
+    ></sg-generic-model-device-view>
+    <sg-generic-model-device-view
+        *ngFor="let modelData of data.leftWing.impellers;"
+        modelName="ImpellerModel"
+        [config]="{
+            title: 'ImpellerModel',
+            icon: 'tuiIconAirplay'
+        }"
+        [data]="modelData"
+    ></sg-generic-model-device-view>
 </div>
-<div class="sg-devices-grid__row">
-    <sg-ru-model-device-view></sg-ru-model-device-view>
-    <sg-bms-model-device-view></sg-bms-model-device-view>
-</div>
+<!--<div class="sg-devices-grid__row">-->
+<!--    <sg-ru-model-device-view></sg-ru-model-device-view>-->
+<!--    <sg-bms-model-device-view></sg-bms-model-device-view>-->
+<!--</div>-->
 <div class="sg-devices-grid__row">
     <div>TODO: Impellers</div>
 </div>
