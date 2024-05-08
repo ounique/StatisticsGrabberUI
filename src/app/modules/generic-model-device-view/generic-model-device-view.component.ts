@@ -1,16 +1,42 @@
 import {CommonModule} from "@angular/common";
-import {ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, SimpleChanges} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    HostBinding,
+    Inject,
+    Injector,
+    Input,
+    OnChanges,
+    SimpleChanges
+} from "@angular/core";
 import {SGDataService} from "../../services/data.service";
 import {SGAppQuery} from "../../state/app.query";
-import {TuiSvgModule} from "@taiga-ui/core";
+import {
+    TuiAlertService,
+    TuiButtonModule,
+    TuiDataListModule,
+    TuiDialogService,
+    TuiHostedDropdownModule,
+    TuiSvgModule
+} from "@taiga-ui/core";
 import {
     SGParametersPanelConfiguration,
     SGParametersPanelParameter
 } from "../parameters-panel/model/parameters-panel.model";
 import {SGModelPropertyConfig, SGModelsConfig} from "../../models/core/app.model";
 import {SGParametersPanelModule} from "../parameters-panel/parameters-panel.module";
-import {SGGenericModelDeviceViewConfig} from "./models/generic-model-device-view.model";
+import {
+    SGGenericModelDeviceViewConfig,
+    SGGenericModelDeviceViewMenuItem,
+    SGGenericModelDeviceViewMenuItemType
+} from "./models/generic-model-device-view.model";
 import {SGGenericModel} from "../../models/core/generic-model.model";
+import {SGGenericModelDeviceViewFormService} from "./services/generic-model-device-view-form.service";
+import {
+    SGGenericModelDeviceViewFormComponent,
+    SGGenericModelDeviceViewFormData
+} from "./components/generic-model-device-view-form.component";
+import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 
 @Component({
     selector: "sg-generic-model-device-view",
@@ -20,7 +46,13 @@ import {SGGenericModel} from "../../models/core/generic-model.model";
     imports: [
         CommonModule,
         TuiSvgModule,
-        SGParametersPanelModule
+        SGParametersPanelModule,
+        TuiHostedDropdownModule,
+        TuiButtonModule,
+        TuiDataListModule
+    ],
+    providers: [
+        SGGenericModelDeviceViewFormService
     ]
 })
 export class SGGenericModelDeviceViewComponent implements OnChanges {
@@ -45,10 +77,20 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
 
     public _inputParametersPanelConfig: SGParametersPanelConfiguration;
 
+    public _menuItems: SGGenericModelDeviceViewMenuItem[] = [
+        {
+            id: SGGenericModelDeviceViewMenuItemType.INPUT_PARAMS_CHANGE,
+            text: "Изменить входы/параметры"
+        }
+    ];
+
     @HostBinding("class.sg-generic-model-device-view")
     private hostClass: boolean = true;
 
-    constructor(private service: SGDataService,
+    constructor(@Inject(TuiAlertService) private readonly alerts: TuiAlertService,
+                @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
+                @Inject(Injector) private readonly injector: Injector,
+                private service: SGDataService,
                 private appQuery: SGAppQuery) {
     }
 
@@ -56,6 +98,29 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
         if (changes["data"].currentValue) {
             this.initModel();
         }
+    }
+
+    public _onMenuItemClick(id: SGGenericModelDeviceViewMenuItemType): void {
+        this.dialogs
+            .open<SGGenericModelDeviceViewFormData>(
+                new PolymorpheusComponent(SGGenericModelDeviceViewFormComponent, this.injector),
+                {
+                    data: <SGGenericModelDeviceViewFormData>{
+                        data: this.data,
+                        inputs: this._inputParametersPanelConfig,
+                        parameters: this._propertiesParametersPanelConfig
+                    },
+                    dismissible: true,
+                    label: "Входы/Параметры"
+                }
+            )
+            .subscribe();
+        // this.alerts
+        //     .open("Item clicked!", {
+        //         status: "success",
+        //         autoClose: 1500
+        //     })
+        //     .subscribe();
     }
 
     private initModel(): void {
@@ -78,7 +143,8 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
                     label: val.description,
                     fieldKey: val.name,
                     icon: val.icon,
-                    unit: val.units
+                    unit: val.units,
+                    description: val.description
                 };
             })
         };

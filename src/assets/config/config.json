@@ -16,15 +16,18 @@
                 {
                     "name": "airDencity",
                     "description": "Плотность воздуха окружающей среды",
+                    "icon": "tuiIconLayers",
                     "units": "кг/м^3"
                 },
                 {
                     "name": "airSpeed",
+                    "icon": "tuiIconWind",
                     "description": "Скорость воздушного потока",
                     "units": "м/с"
                 },
                 {
                     "name": "ambientTemperature",
+                    "icon": "tuiIconThermometer",
                     "description": "Температура окружающей среды",
                     "units": "°С"
                 }
@@ -33,10 +36,12 @@
                 {
                     "name": "destinationAngleSpeed",
                     "description": "Заданная частота вращения двигателя",
+                    "icon": "tuiIconRotate",
                     "units": "об/мин"
                 },
                 {
                     "name": "sourceVoltage",
+                    "icon": "tuiIconZap",
                     "description": "Напряжение питания",
                     "units": "В"
                 }
@@ -44,16 +49,19 @@
             "outputs": [
                 {
                     "name": "angleSpeed",
+                    "icon": "tuiIconRotate",
                     "description": "Текущая частота вращения двигателя",
                     "units": "об/мин"
                 },
                 {
                     "name": "power",
+                    "icon": "tuiIconZap",
                     "description": "Потребляемая мощность",
                     "units": "Вт"
                 },
                 {
                     "name": "current",
+                    "icon": "tuiIconZap",
                     "description": "Действующий потребляемый ток",
                     "units": "А"
                 },
@@ -79,16 +87,19 @@
                 },
                 {
                     "name": "cpuTemperature",
+                    "icon": "tuiIconThermometer",
                     "description": "Температура платы инвертора",
                     "units": "°С"
                 },
                 {
                     "name": "switchesTempratures",
+                    "icon": "tuiIconThermometer",
                     "description": "Температура ключей",
                     "units": ""
                 },
                 {
                     "name": "tempSwHosts1",
+                    "icon": "tuiIconThermometer",
                     "description": "Температура самого горячего ключа",
                     "units": "°С"
                 },
@@ -99,41 +110,49 @@
                 },
                 {
                     "name": "tempSwHosts2",
+                    "icon": "tuiIconThermometer",
                     "description": "Температура второго самого горячего ключа",
                     "units": ""
                 },
                 {
                     "name": "nSwHosts2",
+                    "icon": "tuiIconThermometer",
                     "description": "Номер второго самого горячего ключа",
                     "units": ""
                 },
                 {
                     "name": "tempSwAvg",
+                    "icon": "tuiIconThermometer",
                     "description": "Температура по ключам средняя",
                     "units": ""
                 },
                 {
                     "name": "windingsTemperatures",
+                    "icon": "tuiIconThermometer",
                     "description": "Температура обмоток",
                     "units": ""
                 },
                 {
                     "name": "tempWMax",
+                    "icon": "tuiIconThermometer",
                     "description": "Максимальная температура обмотки",
                     "units": "°С"
                 },
                 {
                     "name": "tempWAvg",
+                    "icon": "tuiIconThermometer",
                     "description": "Средняя температура обмоток (U, V, W)",
                     "units": "°С"
                 },
                 {
                     "name": "maxMaxSwitchTemperature",
+                    "icon": "tuiIconThermometer",
                     "description": "Максимальная температура ключа за все время моделирования",
                     "units": "°С"
                 },
                 {
                     "name": "maxMaxWindingTemperature",
+                    "icon": "tuiIconThermometer",
                     "description": "Максимальная температура обмотки за все время моделирования",
                     "units": "°С"
                 }
@@ -145,6 +164,7 @@
             "properties": [
                 {
                     "name": "ambientTemperature",
+                    "icon": "tuiIconThermometer",
                     "description": "Температура окружающей среды",
                     "units": "°С"
                 }

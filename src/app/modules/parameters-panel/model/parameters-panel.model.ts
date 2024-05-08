@@ -7,4 +7,5 @@ export type SGParametersPanelParameter = Readonly<{
     label: string;
     unit: string;
     fieldKey: string;
+    description: string;
 }>;

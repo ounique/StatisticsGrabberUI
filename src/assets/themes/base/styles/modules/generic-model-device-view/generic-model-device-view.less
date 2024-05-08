@@ -8,9 +8,15 @@
     &__title {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid var(--tui-base-02);
+        justify-content: space-between;
+        flex: 1 1 auto;
         padding-bottom: 4px;
         margin-bottom: 4px;
+
+        &-container {
+            display: flex;
+            align-items: center;
+        }
 
         &-text {
             font-weight: 600;
@@ -19,6 +25,22 @@
 
         &-icon {
             color: var(--tui-primary)
+        }
+
+        &-options {
+            &-button {
+                .t-wrapper {
+                    padding: 0 !important;
+                }
+
+                .t-content > .t-left {
+                    margin-right: 0 !important;
+                }
+
+                &-content {
+                    min-width: 200px;
+                }
+            }
         }
     }
 

@@ -17,16 +17,17 @@ import {SGNumberPipe} from "../../pipes/number/number.pipe";
 export class SGParameterComponent {
 
     @Input()
-    // @ts-ignore
     public icon: string;
 
     @Input()
-    // @ts-ignore
     public value: number;
 
     @Input()
-    // @ts-ignore
     public unit: string;
+
+    @Input()
+    @HostBinding("title")
+    public description: string;
 
     // @Input()
     // public type: "number" | "array";

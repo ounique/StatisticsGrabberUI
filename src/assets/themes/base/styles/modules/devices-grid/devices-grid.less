@@ -5,13 +5,35 @@
 
     &__row {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         flex: 1 1 auto;
-        width: 100%;
 
-        & > * {
-            margin: 8px;
-            max-width: 400px;
+        &-battery-ru {
+            display: flex;
+            flex: 1 1 auto;
+            width: 100%;
+
+            & > * {
+                margin: 8px;
+            }
+
+            &__battery {
+                flex: 1;
+            }
+        }
+
+        &-impellers {
+            @items-in-row: 3;
+
+            display: flex;
+            flex: 1 1 auto;
+            flex-wrap: wrap;
+            width: 100%;
+
+            & > * {
+                margin: 8px;
+                flex-basis: calc(100% / @items-in-row - 8px * 2);
+            }
         }
     }
 }

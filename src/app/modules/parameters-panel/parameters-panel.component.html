@@ -9,6 +9,7 @@
         class="sg-parameters-panel__parameter"
         *ngFor="let parameter of config.parameters;"
         [icon]="parameter.icon"
+        [description]="parameter.description"
         [unit]="parameter.unit"
         [value]="value[parameter.fieldKey]">
     </sg-parameter>
