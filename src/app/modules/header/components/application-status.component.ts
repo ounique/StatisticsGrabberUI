@@ -2,16 +2,19 @@ import {ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, Simpl
 import {CommonModule} from "@angular/common";
 import {SGAppQuery} from "../../../state/app.query";
 import {SGServerStatus} from "../../../models/core/server.model";
-import {TuiHintModule, TuiTooltipModule} from "@taiga-ui/core";
+import {TuiButtonModule, TuiHintModule, TuiTooltipModule} from "@taiga-ui/core";
+import {Observable} from "rxjs";
 
 @Component({
     selector: "sg-application-status",
     templateUrl: "./application-status.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, TuiTooltipModule, TuiHintModule]
+    imports: [CommonModule, TuiTooltipModule, TuiHintModule, TuiButtonModule]
 })
 export class SGApplicationStatusComponent {
+
+    public _isServerReady$ = this.appQuery.isServersReady$;
 
     @Input()
     public status: SGServerStatus;

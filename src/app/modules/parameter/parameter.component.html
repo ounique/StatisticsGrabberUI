@@ -1,12 +1,33 @@
-<tui-svg class="sg-parameter__icon"
-         *ngIf="icon"
-         [src]="icon">
-</tui-svg>
-<div class="sg-parameter__text">
-    <span class="sg-parameter__text-value">
-        {{ value | sgNumber }}
-    </span>
-    <span class="sg-parameter__text-unit">
-        {{ unit }}
-    </span>
-</div>
+<ng-template
+    [ngTemplateOutlet]="parametersWithIconsView ? parametersWithIconsViewTemplate : textParametersViewTemplate"
+></ng-template>
+
+<ng-template #parametersWithIconsViewTemplate>
+    <tui-svg class="sg-parameter__icon"
+             *ngIf="icon"
+             [src]="icon">
+    </tui-svg>
+    <div class="sg-parameter__text">
+        <span class="sg-parameter__text-value">
+            {{ value | sgNumber }}
+        </span>
+        <span class="sg-parameter__text-unit">
+            {{ unit }}
+        </span>
+    </div>
+</ng-template>
+
+<ng-template #textParametersViewTemplate>
+    <div class="sg-parameter__template-text-view-container">
+        <div class="sg-parameter__template-text-view-label">
+            <span class="sg-parameter__template-text-view-label-text">
+                {{ description }}
+            </span>
+        </div>
+        <div class="sg-parameter__template-text-view-value">
+            <span class="sg-parameter__template-text-view-value-text">
+                {{ value | sgNumber }}
+            </span>
+        </div>
+    </div>
+</ng-template>

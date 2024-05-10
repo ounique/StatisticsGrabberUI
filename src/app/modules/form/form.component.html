@@ -1,0 +1,39 @@
+<!--<form [formGroup]="testForm">-->
+<form class="sg-form__wrapper"
+      formGroup>
+    <div
+        class="sg-form__group"
+        *ngFor="let group of config.groups;"
+    >
+        <div
+            class="sg-form__group-title"
+            *ngIf="group.label"
+        >
+            <span class="sg-form__group-title-text">
+                {{ group.label }}
+            </span>
+        </div>
+        <div
+            class="sg-form__group-inner-group"
+            *ngFor="let innerGroup of group.innerGroups;"
+        >
+            <div
+                class="sg-form__group-title"
+                *ngIf="innerGroup.label"
+            >
+                <span class="sg-form__group-title-text">
+                    {{ innerGroup.label }}
+                </span>
+            </div>
+            <div class="sg-form__group-inner-group-controls">
+                <tui-input-number
+                    *ngFor="let i of innerGroup.controls;"
+                    [formControlName]="i.name"
+                    [tuiTextfieldPostfix]="i.postfix"
+                >
+                    {{ i.label }}
+                </tui-input-number>
+            </div>
+        </div>
+    </div>
+</form>

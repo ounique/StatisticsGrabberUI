@@ -17,6 +17,9 @@ export class SGParametersPanelComponent<T> {
     @Input()
     public value: T;
 
+    @Input()
+    public parametersWithIconsView: boolean;
+
     @HostBinding("class.sg-parameters-panel")
     private hostClass: boolean = true;
 

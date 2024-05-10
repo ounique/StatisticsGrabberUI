@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {SGAppStore} from "./app.store";
 import {UpdateStateCallback} from "@datorama/akita";
-import {SGAppState} from "./app.state";
+import {SGAppState, SGAppUiState} from "./app.state";
 import {SGConfig} from "../models/core/app.model";
 import {SGServerStatus} from "../models/core/server.model";
 
@@ -13,9 +13,20 @@ export class SGAppService {
     }
 
     public updateTimeout(value: number): void {
-        this.updateState(() => {
+        this.updateState((state) => {
             return {
-                timeout: value
+                config: {
+                    ...state.config,
+                    defaultTimeout: value
+                }
+            };
+        });
+    }
+
+    public updateParametersView(parametersWithIconsView: boolean): void {
+        this.updateUiState(() => {
+            return {
+                parametersWithIconsView: parametersWithIconsView
             };
         });
     }
@@ -32,6 +43,18 @@ export class SGAppService {
         this.updateState(() => {
             return {
                 serverStatus: status
+            };
+        });
+    }
+
+    private updateUiState(callback: UpdateStateCallback<SGAppUiState>): void {
+        this.store.update((state: SGAppState) => {
+            return {
+                ...state,
+                ui: {
+                    ...state.ui,
+                    ...callback(state.ui)
+                }
             };
         });
     }

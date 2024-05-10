@@ -1,3 +1,5 @@
+@import "../../common/mixins.less";
+
 .sg-parameter {
     position: relative;
     display: flex;
@@ -25,6 +27,36 @@
         &-unit {
             margin-left: 2px;
             color: var(--tui-base-07);
+        }
+    }
+
+    &__template {
+        &-text-view {
+            &-container {
+                display: flex;
+            }
+
+            &-label {
+                display: flex;
+                color: var(--tui-base-07);
+                max-width: 140px;
+                min-width: 140px;
+
+                &-text {
+                    .text-overflow();
+                }
+            }
+
+            &-value {
+                display: flex;
+                margin-left: 8px;
+                max-width: 60px;
+                min-width: 60px;
+
+                &-text {
+                    .text-overflow();
+                }
+            }
         }
     }
 }

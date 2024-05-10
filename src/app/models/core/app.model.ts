@@ -1,5 +1,6 @@
 export interface SGConfig {
     readonly defaultTimeout: number;
+    readonly availableTimeouts: number[];
     readonly numberFormat: SGConfigNumberFormat;
     readonly server: SGServerConfig;
     readonly models: SGModelsConfig[];

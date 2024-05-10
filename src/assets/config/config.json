@@ -1,5 +1,11 @@
 {
     "defaultTimeout": 500,
+    "availableTimeouts": [
+        500,
+        800,
+        1000,
+        2000
+    ],
     "server": {
         "url": "http://localhost:3000"
     },
@@ -12,6 +18,7 @@
         {
             "name": "ImpellerModel",
             "description": "Модель импеллера",
+            "icon": "tuiIconZap",
             "properties": [
                 {
                     "name": "airDencity",
@@ -161,6 +168,7 @@
         {
             "name": "RUModel",
             "description": "Модель распределительного устройства",
+            "icon": "tuiIconMinimize",
             "properties": [
                 {
                     "name": "ambientTemperature",
@@ -181,6 +189,7 @@
         {
             "name": "BMSModel",
             "description": "Модель устройства для контроля состояния аккумуляторной батареи",
+            "icon": "tuiIconBatteryCharging",
             "properties": [
                 {
                     "name": "capacity",

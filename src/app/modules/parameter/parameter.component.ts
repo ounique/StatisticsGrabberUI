@@ -29,6 +29,9 @@ export class SGParameterComponent {
     @HostBinding("title")
     public description: string;
 
+    @Input()
+    public parametersWithIconsView: boolean;
+
     // @Input()
     // public type: "number" | "array";
 
