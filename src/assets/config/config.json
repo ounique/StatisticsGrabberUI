@@ -1,5 +1,5 @@
 {
-    "defaultTimeout": 500,
+    "defaultTimeout": 1000,
     "availableTimeouts": [
         500,
         800,

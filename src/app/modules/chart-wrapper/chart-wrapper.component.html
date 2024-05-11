@@ -4,5 +4,11 @@
     </span>
 </div>
 <div class="sg-chart-wrapper__chart">
-    chart
+    <canvas
+        baseChart
+        type="line"
+        [data]="_chartData"
+        [options]="_chartOptions"
+    >
+    </canvas>
 </div>

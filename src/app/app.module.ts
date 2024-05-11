@@ -10,6 +10,7 @@ import {appBootstrap} from "./app.bootstrap";
 import {SGAppConfigDataService} from "./services/app-config.service";
 import {SGHealthDataService} from "./services/health.service";
 import {SGAppService} from "./state/app.service";
+import {NgChartsModule} from 'ng2-charts';
 
 @NgModule({
     declarations: [
