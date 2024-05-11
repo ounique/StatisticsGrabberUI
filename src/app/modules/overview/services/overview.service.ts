@@ -16,7 +16,7 @@ export class SGOverviewService {
     public getModelsOutput(): Observable<SGModelsOutput> {
         return !this.isMultipleMode
             ? this.dataService.getModelsOutput()
-            : this.appQuery.select(state => state.timeout)
+            : this.appQuery.select(state => state.config.defaultTimeout)
                     .pipe(
                         switchMap((timeout: number) => {
                             return interval(timeout)

@@ -1,9 +1,12 @@
+<span class="sg-pooling-interval__control-label">
+    Таймаут:
+</span>
 <tui-combo-box
-    tuiDropdownMobile
-    [tuiTextfieldCleaner]="true"
+    class="sg-pooling-interval__control"
     [(ngModel)]="_timeout"
+    [tuiTextfieldSize]="'s'"
+    (ngModelChange)="_onModelChange($event)"
 >
-    Таймаут
     <tui-data-list-wrapper
         *tuiDataList
         [items]="_items$ | async"

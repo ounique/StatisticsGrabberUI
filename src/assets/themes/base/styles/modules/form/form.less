@@ -1,0 +1,35 @@
+.sg-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow: hidden;
+
+    &__wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__group {
+        margin-bottom: 24px;
+
+        &-title {
+            margin-bottom: 12px;
+        }
+
+        &-inner-group {
+            &:not(:last-child) {
+                margin-bottom: 12px;
+            }
+
+            &-title {
+                margin-bottom: 8px;
+            }
+
+            &-control {
+                margin-bottom: 4px;
+            }
+        }
+    }
+}

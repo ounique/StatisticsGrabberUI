@@ -1,21 +1,23 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, SimpleChanges} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {SGAppQuery} from "../../../state/app.query";
 import {map, Observable} from "rxjs";
 import {SGServerStatus} from "../../../models/core/server.model";
-import {TuiHintModule, TuiSvgModule} from "@taiga-ui/core";
+import {TuiHintModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
 import {TuiComboBoxModule, TuiDataListWrapperModule} from "@taiga-ui/kit";
+import {FormsModule} from "@angular/forms";
+import {SGAppService} from "../../../state/app.service";
 
 @Component({
     selector: "sg-pooling-interval",
     templateUrl: "./pooling-interval.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, TuiComboBoxModule, TuiDataListWrapperModule]
+    imports: [CommonModule, TuiComboBoxModule, TuiDataListWrapperModule, TuiTextfieldControllerModule, FormsModule]
 })
-export class SGServerStatusComponent implements OnChanges {
+export class SGPoolingIntervalComponent implements OnInit {
 
-    public _serverStatus$: Observable<number> = this.appQuery.select(state => state.timeout);
+    public _serverStatus$: Observable<number> = this.appQuery.select(state => state.config.defaultTimeout);
 
     public _timeout: string;
 
@@ -24,13 +26,20 @@ export class SGServerStatusComponent implements OnChanges {
             map((items: number[]) => items.map(String))
         )
 
-    @HostBinding("class.sg-server-status")
+    @HostBinding("class.sg-pooling-interval")
     private hostClass: boolean = true;
 
-    constructor(private appQuery: SGAppQuery) {
+    constructor(private appQuery: SGAppQuery,
+                private appService: SGAppService) {
     }
 
-    public ngOnChanges(changes: SimpleChanges): void {
-        // this._serverStatus$ = this.appQuery.select(state => state.serverStatuses[this.serverNumber]);
+    public ngOnInit(): void {
+        this._timeout = this.appQuery.getValue().config.defaultTimeout.toString();
+    }
+
+    public _onModelChange(event: string): void {
+        if (event) {
+            this.appService.updateTimeout(Number(event));
+        }
     }
 }

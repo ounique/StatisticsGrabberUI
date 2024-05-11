@@ -1,31 +1,21 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    HostBinding,
-    Inject,
-    TemplateRef,
-    ViewChild,
-    ViewChildren
-} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, Inject, TemplateRef, ViewChild} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {SGAppQuery} from "../../state/app.query";
 import {SGAppService} from "../../state/app.service";
-import {Observable} from "rxjs";
 import {TuiDialogService, TuiSvgModule} from "@taiga-ui/core";
-import {SGServerStatusComponent} from "./components/server-status.component";
 import {SGAboutComponent} from "../about/about.component";
 import {SGApplicationStatusComponent} from "./components/application-status.component";
+import {SGServerStatusComponent} from "./components/server-status.component";
+import {SGPoolingIntervalComponent} from "./components/pooling-interval.component";
 
 @Component({
     selector: "sg-header",
     templateUrl: "./header.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, TuiSvgModule, SGServerStatusComponent, SGAboutComponent, SGApplicationStatusComponent]
+    imports: [CommonModule, TuiSvgModule, SGPoolingIntervalComponent, SGServerStatusComponent, SGAboutComponent, SGApplicationStatusComponent, SGServerStatusComponent]
 })
 export class SGHeaderComponent {
-
-    public _timeout$: Observable<number> = this.appQuery.select(state => state.timeout);
 
     @ViewChild("aboutTemplate", {
         static: true
@@ -38,10 +28,6 @@ export class SGHeaderComponent {
     constructor(private appQuery: SGAppQuery,
                 private appService: SGAppService,
                 @Inject(TuiDialogService) private readonly dialogs: TuiDialogService) {
-    }
-
-    public _onClick(): void {
-        this.appService.updateTimeout(this.appQuery.getValue().timeout + 100);
     }
 
     public _onAboutClick(): void {
