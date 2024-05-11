@@ -26,7 +26,7 @@ export class SGOverviewComponent {
 
     public _data$: Observable<SGModelsOutput> = this.service.getModelsOutput();
 
-    public _activeTabIndex: number = 0;
+    public _activeTabIndex: number = 1;
 
     @HostBinding("class.sg-overview")
     private hostClass: boolean = true;

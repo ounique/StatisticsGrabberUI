@@ -1,1 +1,16 @@
-Charts grid
+<ng-container
+    *ngFor="let config of _chartConfigs;"
+>
+    <sg-chart-wrapper
+        class="sg-charts-grid__chart"
+        orientation="leftWing"
+        [config]="config"
+        [data]="data"
+    ></sg-chart-wrapper>
+    <sg-chart-wrapper
+        class="sg-charts-grid__chart"
+        orientation="rightWing"
+        [config]="config"
+        [data]="data"
+    ></sg-chart-wrapper>
+</ng-container>

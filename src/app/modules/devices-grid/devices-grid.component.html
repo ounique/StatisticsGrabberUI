@@ -1,38 +1,57 @@
-<div class="sg-devices-grid__row">
-    <div class="sg-devices-grid__row-battery-ru">
-        <sg-generic-model-device-view
-            *ngFor="let modelData of data.leftWing.ru; let idx=index;"
-            modelName="RUModel"
-            [config]="{
-                title: 'РУ #' + (idx + 1),
-                icon: 'tuiIconMinimize'
-            }"
-            [data]="modelData"
-        ></sg-generic-model-device-view>
-        <sg-generic-model-device-view
-            class="sg-devices-grid__row-battery-ru__battery"
-            *ngFor="let modelData of data.leftWing.bms; let idx=index;"
-            modelName="BMSModel"
-            [config]="{
-                title: 'Батарея #' + (idx + 1),
-                icon: 'tuiIconBatteryCharging'
-            }"
-            [data]="modelData"
-        ></sg-generic-model-device-view>
+<ng-template [ngTemplateOutlet]="devicesTemplate"
+             [ngTemplateOutletContext]="{
+                 wingData: data.leftWing,
+                 title: 'Левое Крыло'
+             }"
+></ng-template>
+<div class="sg-devices-grid__separator"></div>
+<ng-template [ngTemplateOutlet]="devicesTemplate"
+             [ngTemplateOutletContext]="{
+                 wingData: data.rightWing,
+                 title: 'Правое Крыло'
+             }"
+></ng-template>
+
+<ng-template #devicesTemplate
+             let-wingData="wingData"
+             let-title="title">
+    <div class="sg-devices-grid__row-title">
+        <span class="sg-devices-grid__row-title tui-text_body-m">
+            {{ title }}
+        </span>
     </div>
-    <div class="sg-devices-grid__row-impellers">
-        <sg-generic-model-device-view
-            *ngFor="let modelData of data.leftWing.impellers; let idx=index;"
-            modelName="ImpellerModel"
-            [config]="{
-                title: 'Импеллер #' + (idx + 1),
-                icon: 'tuiIconZap'
-            }"
-            [data]="modelData"
-        ></sg-generic-model-device-view>
+    <div class="sg-devices-grid__row">
+        <div class="sg-devices-grid__row-battery-ru">
+            <sg-generic-model-device-view
+                *ngFor="let modelData of wingData.ru; let idx=index;"
+                modelName="RUModel"
+                [config]="{
+                    title: 'РУ #' + (idx + 1),
+                    icon: 'tuiIconMinimize'
+                }"
+                [data]="modelData"
+            ></sg-generic-model-device-view>
+            <sg-generic-model-device-view
+                class="sg-devices-grid__row-battery-ru__battery"
+                *ngFor="let modelData of wingData.bms; let idx=index;"
+                modelName="BMSModel"
+                [config]="{
+                    title: 'Батарея #' + (idx + 1),
+                    icon: 'tuiIconBatteryCharging'
+                }"
+                [data]="modelData"
+            ></sg-generic-model-device-view>
+        </div>
+        <div class="sg-devices-grid__row-impellers">
+            <sg-generic-model-device-view
+                *ngFor="let modelData of wingData.impellers; let idx=index;"
+                modelName="ImpellerModel"
+                [config]="{
+                    title: 'Импеллер #' + (idx + 1),
+                    icon: 'tuiIconZap'
+                }"
+                [data]="modelData"
+            ></sg-generic-model-device-view>
+        </div>
     </div>
-</div>
-<!--<div class="sg-devices-grid__row">-->
-<!--    <sg-ru-model-device-view></sg-ru-model-device-view>-->
-<!--    <sg-bms-model-device-view></sg-bms-model-device-view>-->
-<!--</div>-->
+</ng-template>

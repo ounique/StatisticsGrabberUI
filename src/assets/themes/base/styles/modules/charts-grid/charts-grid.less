@@ -1,3 +1,13 @@
 .sg-charts-grid {
+    @charts-in-row: 4;
+
     display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+
+    &__chart {
+        max-width: calc(100% / @charts-in-row - 8px * 2);
+        min-width: calc(100% / @charts-in-row - 8px * 2);
+        margin: 8px;
+    }
 }
