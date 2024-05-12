@@ -1,10 +1,12 @@
 import {ChartConfiguration} from "chart.js";
+import {SGModelsWing} from "../../../models/core/models-status.model";
 
 export type SGChartWrapperConfig = Readonly<{
-    modelFieldKey: string;
+    modelFieldKey: keyof SGModelsWing;
     fieldKey: string;
     description: string;
     units: string;
+    seriesPrefix: string;
 }>;
 
 export const SG_CHART_WRAPPER_DEFAULT_OPTIONS: ChartConfiguration["options"] = {

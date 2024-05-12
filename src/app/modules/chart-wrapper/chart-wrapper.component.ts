@@ -37,45 +37,44 @@ export class SGChartWrapperComponent implements OnChanges {
     public _chartOptions = SG_CHART_WRAPPER_DEFAULT_OPTIONS;
 
     public _chartData: ChartData<"bar"> = {
-        labels: ["1", "2", "3", "4", "5", "6", "7"],
-        datasets: [
-            {
-                data: [65, 59, 80, 81, 56, 55, 40],
-                label: "Series A"
-            },
-            {
-                data: [28, 48, 40, 19, 86, 27, 90],
-                label: "Series B"
-            },
-            {
-                data: [28, 48, 40, 9, 86, 27, 90],
-                label: "Series c"
-            },
-            {
-                data: [28, 48, 0, 19, 86, 27, 90],
-                label: "Series d"
-            }
-        ]
+        labels: [],
+        datasets: []
     };
 
     @HostBinding("class.sg-chart-wrapper")
     private hostClass: boolean = true;
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes["data"].currentValue) {
+        if (changes["data"].firstChange) {
+            this.initChartData();
+        }
+
+        if (!changes["data"].firstChange && changes["data"].currentValue) {
             this.updateChartData();
         }
     }
 
-    public updateChartData(): void {
-        // this.lineChartData.datasets.forEach((x, i) => {
-        //     const num = LineChartComponent.generateNumber(i);
-        //     x.data.push(num);
-        // });
-        // this.lineChartData?.labels?.push(
-        //     `Label ${this.lineChartData.labels.length}`,
-        // );
+    public initChartData(): void {
+        this._chartData.labels = [];
+        this._chartData.datasets.push(
+            ...this.data[this.orientation][this.config.modelFieldKey].map((_, idx) => {
+                return {
+                    data: [],
+                    label: this.config.seriesPrefix + " #" + (idx + 1).toString()
+                };
+            })
+        )
+    }
 
-        this.chart?.update();
+    public updateChartData(): void {
+        if (this.chart) {
+            this.data[this.orientation][this.config.modelFieldKey].forEach((val, idx) => {
+                this._chartData.datasets[idx].data.push(val.output[this.config.fieldKey]);
+            });
+            this._chartData.labels.push(
+                `${this._chartData.labels.length}`,
+            );
+            this.chart.update();
+        }
     }
 }

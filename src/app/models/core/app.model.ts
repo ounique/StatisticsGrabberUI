@@ -25,8 +25,14 @@ export interface SGModelsConfig {
 }
 
 export interface SGModelPropertyConfig {
-    readonly name: string;
+    readonly name: SGModelName;
     readonly description: string;
     readonly units: string;
     readonly icon?: string;
+}
+
+export enum SGModelName {
+    BMS_MODEL = "BMSModel",
+    RU_MODEL = "RUModel",
+    IMPELLER_MODEL = "ImpellerModel"
 }
