@@ -1,23 +1,27 @@
 <sg-form
+    class="sg-generic-model-device-view-form__form"
     [config]="_formConfig"
 ></sg-form>
-<!--<pre>{{ data?.data | json }}</pre>-->
-
-<button
-    tuiButton
-    type="button"
-    appearance="secondary"
-    size="m"
-    (click)="_test()"
->
-    Отменить
-</button>
-<button
-    tuiButton
-    type="button"
-    appearance="primary"
-    size="m"
-    (click)="_test()"
->
-    Применить
-</button>
+<div class="sg-generic-model-device-view-form__toolbar">
+    <button
+        class="sg-generic-model-device-view-form__toolbar-button"
+        tuiButton
+        type="button"
+        appearance="secondary"
+        size="m"
+        (click)="_onCancel()"
+    >
+        Отменить
+    </button>
+    <button
+        class="sg-generic-model-device-view-form__toolbar-button"
+        tuiButton
+        type="button"
+        appearance="primary"
+        size="m"
+        [disabled]="!(_isValid$ | async)"
+        (click)="_onSubmit()"
+    >
+        Применить
+    </button>
+</div>

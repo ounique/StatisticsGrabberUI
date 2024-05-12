@@ -1,6 +1,5 @@
-<!--<form [formGroup]="testForm">-->
 <form class="sg-form__wrapper"
-      formGroup>
+      [formGroup]="_formGroup">
     <div
         class="sg-form__group"
         *ngFor="let group of config.groups;"

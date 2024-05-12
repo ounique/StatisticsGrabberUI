@@ -34,6 +34,8 @@
         "@taiga-ui/layout": "^3.75.0",
         "@taiga-ui/styles": "^3.75.0",
         "@tinkoff/ng-dompurify": "4.0.0",
+        "@ngneat/forms-manager": "2.5.0",
+        "@ngneat/until-destroy": "9.2.1",
         "chart.js": "^3.6.0",
         "dompurify": "3.0.6",
         "echarts": "^5.5.0",
