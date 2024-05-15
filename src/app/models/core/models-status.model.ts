@@ -12,3 +12,8 @@ export interface SGModelsWing {
     readonly bms: SGBmsModel[];
     readonly ru: SGRuModel[];
 }
+
+export interface SGModelUpdateRequest<Input = any, Parameters = any> {
+    readonly input: Input;
+    readonly parameters: Parameters;
+}

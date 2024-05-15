@@ -23,7 +23,7 @@ import {
     SGParametersPanelConfiguration,
     SGParametersPanelParameter
 } from "../parameters-panel/model/parameters-panel.model";
-import {SGModelPropertyConfig, SGModelsConfig} from "../../models/core/app.model";
+import {SGModelName, SGModelOrientation, SGModelPropertyConfig, SGModelsConfig} from "../../models/core/app.model";
 import {SGParametersPanelModule} from "../parameters-panel/parameters-panel.module";
 import {
     SGGenericModelDeviceViewConfig,
@@ -58,10 +58,13 @@ import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 export class SGGenericModelDeviceViewComponent implements OnChanges {
 
     @Input()
-    public modelName: string;
+    public modelName: SGModelName;
 
     @Input()
-    public multipleMode: boolean = false;
+    public number: number;
+
+    @Input()
+    public wing: SGModelOrientation;
 
     @Input()
     public data: SGGenericModel;
@@ -87,10 +90,8 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
     @HostBinding("class.sg-generic-model-device-view")
     private hostClass: boolean = true;
 
-    constructor(@Inject(TuiAlertService) private readonly alerts: TuiAlertService,
-                @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
+    constructor(@Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
                 @Inject(Injector) private readonly injector: Injector,
-                private service: SGDataService,
                 private appQuery: SGAppQuery) {
     }
 
@@ -108,19 +109,16 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
                     data: <SGGenericModelDeviceViewFormData>{
                         data: this.data,
                         inputs: this._inputParametersPanelConfig,
-                        parameters: this._propertiesParametersPanelConfig
+                        parameters: this._propertiesParametersPanelConfig,
+                        number: this.number,
+                        wing: this.wing,
+                        name: this.modelName
                     },
                     dismissible: true,
                     label: "Входы/Параметры"
                 }
             )
             .subscribe();
-        // this.alerts
-        //     .open("Item clicked!", {
-        //         status: "success",
-        //         autoClose: 1500
-        //     })
-        //     .subscribe();
     }
 
     private initModel(): void {

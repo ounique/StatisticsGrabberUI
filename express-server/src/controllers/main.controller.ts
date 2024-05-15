@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {SGMockController, SGMockControllerMethod, SGMockRequest} from "../decorators/controller.decorator";
 import {SGServerApplicationStatus, SGServerStatus} from "../../../src/app/models/core/server.model";
 import {SGMockMainService} from "../services/main.service";
+import {SGModelName, SGModelOrientation} from "../../../src/app/models/core/app.model";
 
 @SGMockController({
     path: "/api"
@@ -29,8 +30,31 @@ export class SGMainController {
         method: SGMockControllerMethod.GET
     })
     private getModelsOutputResponse(request: Request, response: Response): void {
+        this.mockMainService.updateModelOutputs();
+
         response.status(200).json(
             this.mockMainService.getModelsOutput()
         );
+    }
+
+    @SGMockRequest({
+        path: "/modelConfiguration[:]update",
+        method: SGMockControllerMethod.POST
+    })
+    private updateModelParameters(request: Request, response: Response): void {
+        const wing = request.query.wing as string;
+        const modelType = request.query.modelType as string;
+        const number = request.query.number as string;
+        const data = request.body;
+
+        console.log(wing, modelType, number, request.body);
+
+        this.mockMainService.updateModelParameters(
+            modelType as SGModelName,
+            wing as SGModelOrientation,
+            Number(number),
+            data
+        );
+        response.status(200).json();
     }
 }

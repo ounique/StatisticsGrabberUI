@@ -12,7 +12,7 @@ export type SGChartWrapperConfig = Readonly<{
 export const SG_CHART_WRAPPER_DEFAULT_OPTIONS: ChartConfiguration["options"] = {
     elements: {
         line: {
-            tension: 0.3
+            tension: 0
         }
     },
     interaction: {
@@ -32,5 +32,9 @@ export const SG_CHART_WRAPPER_DEFAULT_OPTIONS: ChartConfiguration["options"] = {
         legend: {
             display: true
         }
+    },
+    animation: false,
+    animations: {
+        x: false
     }
 }

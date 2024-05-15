@@ -1,0 +1,25 @@
+<ng-container *tuiLet="_appStatus$ | async as appStatus">
+    <div class="sg-application-status__wrapper"
+         [class._danger]="appStatus === _appStatuses.RUNNING"
+    >
+        <ng-template [ngTemplateOutlet]="appStatus === _appStatuses.IDLE ? startAppTemplate : stopAppTemplate"></ng-template>
+    </div>
+</ng-container>
+
+<ng-template #startAppTemplate>
+    <tui-svg class="sg-application-status__template-icon"
+             src="tuiIconPlay">
+    </tui-svg>
+    <span class="sg-application-status__template-text">
+        Запустить модели
+    </span>
+</ng-template>
+
+<ng-template #stopAppTemplate>
+    <tui-svg class="sg-application-status__template-icon"
+             src="tuiIconSlash">
+    </tui-svg>
+    <span class="sg-application-status__template-text">
+        Остановить модели
+    </span>
+</ng-template>

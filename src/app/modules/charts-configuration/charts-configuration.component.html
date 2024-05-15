@@ -1,0 +1,56 @@
+<div class="sg-charts-configuration__container">
+    <div class="sg-charts-configuration__title tui-text_h2">
+        <span>{{ "Изменение отображаемых параметров" }}</span>
+    </div>
+    <div class="sg-charts-configuration__container-blocks">
+        <div class="sg-charts-configuration__block"
+             *ngFor="let model of data.models;"
+        >
+            <div class="sg-charts-configuration__block-title tui-text_h6">
+                {{ model.description }}
+            </div>
+            <div class="sg-charts-configuration__block-container">
+                <tui-checkbox-labeled
+                    class="sg-charts-configuration__block-checkbox"
+                    *ngFor="let param of model.outputs;"
+                >
+                    {{ param.description }} <span class="sg-charts-configuration__block-checkbox-unit">{{ param.units }}</span>
+                </tui-checkbox-labeled>
+            </div>
+        </div>
+        <div class="sg-charts-configuration__block">
+            <div class="sg-charts-configuration__block-title tui-text_h6">
+                {{ "Отображение крыльев" }}
+            </div>
+            <div class="sg-charts-configuration__block-container">
+                <tui-checkbox-labeled
+                    class="sg-charts-configuration__block-checkbox"
+                >
+                    {{ "Левое" }}
+                </tui-checkbox-labeled>
+                <tui-checkbox-labeled
+                    class="sg-charts-configuration__block-checkbox"
+                >
+                    {{ "Правое" }}
+                </tui-checkbox-labeled>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sg-charts-configuration__toolbar">
+    <button
+        class="sg-charts-configuration__toolbar-button"
+        tuiButton
+        size="m"
+        appearance="secondary"
+    >
+        Назад
+    </button>
+    <button
+        class="sg-charts-configuration__toolbar-button"
+        tuiButton
+        size="m"
+    >
+        Сохранить
+    </button>
+</div>

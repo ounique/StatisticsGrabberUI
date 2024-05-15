@@ -36,3 +36,8 @@ export enum SGModelName {
     RU_MODEL = "RUModel",
     IMPELLER_MODEL = "ImpellerModel"
 }
+
+export enum SGModelOrientation {
+    LEFT_WING = "leftWing",
+    RIGHT_WING = "rightWing"
+}

@@ -1,6 +1,7 @@
 <ng-template [ngTemplateOutlet]="devicesTemplate"
              [ngTemplateOutletContext]="{
                  wingData: data.leftWing,
+                 wing: _wing.LEFT_WING,
                  title: 'Левое Крыло'
              }"
 ></ng-template>
@@ -8,12 +9,14 @@
 <ng-template [ngTemplateOutlet]="devicesTemplate"
              [ngTemplateOutletContext]="{
                  wingData: data.rightWing,
+                 wing: _wing.RIGHT_WING,
                  title: 'Правое Крыло'
              }"
 ></ng-template>
 
 <ng-template #devicesTemplate
              let-wingData="wingData"
+             let-wing="wing"
              let-title="title">
     <div class="sg-devices-grid__row-title">
         <span class="sg-devices-grid__row-title tui-text_body-m">
@@ -24,7 +27,9 @@
         <div class="sg-devices-grid__row-battery-ru">
             <sg-generic-model-device-view
                 *ngFor="let modelData of wingData.ru; let idx=index;"
-                modelName="RUModel"
+                [modelName]="_modelName.RU_MODEL"
+                [number]="idx"
+                [wing]="wing"
                 [config]="{
                     title: 'РУ #' + (idx + 1),
                     icon: 'tuiIconMinimize'
@@ -34,7 +39,9 @@
             <sg-generic-model-device-view
                 class="sg-devices-grid__row-battery-ru__battery"
                 *ngFor="let modelData of wingData.bms; let idx=index;"
-                modelName="BMSModel"
+                [modelName]="_modelName.BMS_MODEL"
+                [number]="idx"
+                [wing]="wing"
                 [config]="{
                     title: 'Батарея #' + (idx + 1),
                     icon: 'tuiIconBatteryCharging'
@@ -45,7 +52,9 @@
         <div class="sg-devices-grid__row-impellers">
             <sg-generic-model-device-view
                 *ngFor="let modelData of wingData.impellers; let idx=index;"
-                modelName="ImpellerModel"
+                [modelName]="_modelName.IMPELLER_MODEL"
+                [number]="idx"
+                [wing]="wing"
                 [config]="{
                     title: 'Импеллер #' + (idx + 1),
                     icon: 'tuiIconZap'

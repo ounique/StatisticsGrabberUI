@@ -1,27 +1,31 @@
-<sg-form
-    class="sg-generic-model-device-view-form__form"
-    [config]="_formConfig"
-></sg-form>
-<div class="sg-generic-model-device-view-form__toolbar">
-    <button
-        class="sg-generic-model-device-view-form__toolbar-button"
-        tuiButton
-        type="button"
-        appearance="secondary"
-        size="m"
-        (click)="_onCancel()"
-    >
-        Отменить
-    </button>
-    <button
-        class="sg-generic-model-device-view-form__toolbar-button"
-        tuiButton
-        type="button"
-        appearance="primary"
-        size="m"
-        [disabled]="!(_isValid$ | async)"
-        (click)="_onSubmit()"
-    >
-        Применить
-    </button>
-</div>
+<ng-container *tuiLet="_isLoading$ | async as isLoading">
+    <sg-form
+        class="sg-generic-model-device-view-form__form"
+        [config]="_formConfig"
+    ></sg-form>
+    <div class="sg-generic-model-device-view-form__toolbar">
+        <button
+            class="sg-generic-model-device-view-form__toolbar-button"
+            tuiButton
+            type="button"
+            appearance="secondary"
+            size="m"
+            [showLoader]="isLoading"
+            (click)="_onCancel()"
+        >
+            Отменить
+        </button>
+        <button
+            class="sg-generic-model-device-view-form__toolbar-button"
+            tuiButton
+            type="button"
+            appearance="primary"
+            size="m"
+            [disabled]="!(_isValid$ | async)"
+            [showLoader]="isLoading"
+            (click)="_onSubmit()"
+        >
+            Применить
+        </button>
+    </div>
+</ng-container>

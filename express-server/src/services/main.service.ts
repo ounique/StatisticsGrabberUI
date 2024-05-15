@@ -1,4 +1,4 @@
-import {SGModelsOutput, SGModelsWing} from "../../../src/app/models/core/models-status.model";
+import {SGModelsOutput, SGModelsWing, SGModelUpdateRequest} from "../../../src/app/models/core/models-status.model";
 import {
     SGRuModel,
     SGRuModelInput,
@@ -18,13 +18,125 @@ import {
     SGBmsModelOutput,
     SGBmsModelParameters
 } from "../../../src/app/models/core/bms-model.model";
+import {SGModelName, SGModelOrientation} from "../../../src/app/models/core/app.model";
 
 export class SGMockMainService {
 
+    private modelOutputs: SGModelsOutput = {
+        leftWing: this.generateWingData(),
+        rightWing: this.generateWingData()
+    };
+
+    public updateModelOutputs(): void {
+        this.modelOutputs = {
+            leftWing: this.updateWingModelOutputs(this.modelOutputs.leftWing),
+            rightWing: this.updateWingModelOutputs(this.modelOutputs.rightWing),
+        };
+    }
+
     public getModelsOutput(): SGModelsOutput {
+        return this.modelOutputs;
+    }
+
+    public updateModelParameters(type: SGModelName, wing: SGModelOrientation, number: number, data: SGModelUpdateRequest): void {
+        let wingData = wing === SGModelOrientation.RIGHT_WING ? this.modelOutputs.rightWing : this.modelOutputs.leftWing;
+
+        switch (type) {
+            case SGModelName.BMS_MODEL:
+                wingData = this.updateBmsModelProps(data, number, wingData);
+                break;
+            case SGModelName.IMPELLER_MODEL:
+                wingData = this.updateImpellerModelProps(data, number, wingData);
+                break;
+            case SGModelName.RU_MODEL:
+                wingData = this.updateRuModelProps(data, number, wingData);
+                break;
+        }
+
+        if (wing === SGModelOrientation.RIGHT_WING) {
+            this.modelOutputs = {
+                ...this.modelOutputs,
+                rightWing: wingData
+            };
+        } else {
+            this.modelOutputs = {
+                ...this.modelOutputs,
+                leftWing: wingData
+            };
+        }
+    }
+
+    private updateRuModelProps(data: SGModelUpdateRequest<SGRuModelInput, SGRuModelParameters>, number: number, wing: SGModelsWing): SGModelsWing {
         return {
-            leftWing: this.generateWingData(),
-            rightWing: this.generateWingData()
+            ...wing,
+            ru: wing.ru.map((item, idx) => {
+                if (idx === number) {
+                    return {
+                        ...item,
+                        input: data.input,
+                        parameters: data.parameters
+                    };
+                }
+
+                return item;
+            })
+        };
+    }
+
+    private updateBmsModelProps(data: SGModelUpdateRequest<SGBmsModelInput, SGBmsModelParameters>, number: number, wing: SGModelsWing): SGModelsWing {
+        return {
+            ...wing,
+            bms: wing.bms.map((item, idx) => {
+                if (idx === number) {
+                    return {
+                        ...item,
+                        input: data.input,
+                        parameters: data.parameters
+                    };
+                }
+
+                return item;
+            })
+        };
+    }
+
+    private updateImpellerModelProps(data: SGModelUpdateRequest<SGImpellerModelInput, SGImpellerModelParameters>, number: number, wing: SGModelsWing): SGModelsWing {
+        return {
+            ...wing,
+            impellers: wing.impellers.map((item, idx) => {
+                if (idx === number) {
+                    return {
+                        ...item,
+                        input: data.input,
+                        parameters: data.parameters
+                    };
+                }
+
+                return item;
+            })
+        };
+    }
+
+    private updateWingModelOutputs(wing: SGModelsWing): SGModelsWing {
+        return {
+            ru: wing.ru.map((model: SGRuModel) => {
+                return {
+                    ...model,
+                    output: this.generateRuModelOutput()
+                };
+            }),
+            bms: wing.bms.map((model: SGBmsModel) => {
+                return {
+                    ...model,
+                    output: this.generateBmsModelOutput()
+                };
+            }),
+            impellers: wing.impellers.map((model: SGImpellerModel) => {
+                return {
+                    ...model,
+                    output: this.generateImpellerModelOutput()
+                };
+            })
         };
     }
 

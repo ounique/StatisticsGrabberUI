@@ -4,7 +4,7 @@ import {SGAppQuery} from "../../state/app.query";
 import {SGAppService} from "../../state/app.service";
 import {TuiDialogService, TuiSvgModule} from "@taiga-ui/core";
 import {SGAboutComponent} from "../about/about.component";
-import {SGApplicationStatusComponent} from "./components/application-status.component";
+import {SGApplicationStatusComponent} from "../application-status/application-status.component";
 import {SGServerStatusComponent} from "./components/server-status.component";
 import {SGPoolingIntervalComponent} from "./components/pooling-interval.component";
 

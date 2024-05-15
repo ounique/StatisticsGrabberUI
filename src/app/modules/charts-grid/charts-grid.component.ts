@@ -1,17 +1,25 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, Inject, Injector, Input, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {SGModelsOutput} from "../../models/core/models-status.model";
 import {SGAppQuery} from "../../state/app.query";
 import {SGChartWrapperConfig} from "../chart-wrapper/models/chart-wrapper.model";
 import {SGModelName, SGModelPropertyConfig, SGModelsConfig} from "../../models/core/app.model";
 import {SGChartWrapperComponent} from "../chart-wrapper/chart-wrapper.component";
+import {TuiButtonModule, TuiDialogService} from "@taiga-ui/core";
+import {
+    SGGenericModelDeviceViewFormComponent,
+    SGGenericModelDeviceViewFormData
+} from "../generic-model-device-view/components/generic-model-device-view-form.component";
+import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
+import {SGChartsConfigurationComponent} from "../charts-configuration/charts-configuration.component";
+import {SGChartsConfigurationDialogData} from "../charts-configuration/model/charts-configuration.model";
 
 @Component({
     selector: "sg-charts-grid",
     templateUrl: "./charts-grid.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, SGChartWrapperComponent]
+    imports: [CommonModule, SGChartWrapperComponent, TuiButtonModule]
 })
 export class SGChartsGridComponent implements OnInit {
 
@@ -35,11 +43,28 @@ export class SGChartsGridComponent implements OnInit {
     @HostBinding("class.sg-charts-grid")
     private hostClass: boolean = true;
 
-    constructor(private appQuery: SGAppQuery) {
+    constructor(private appQuery: SGAppQuery,
+                @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
+                @Inject(Injector) private readonly injector: Injector) {
     }
 
     public ngOnInit(): void {
         this._chartConfigs = this.getChartConfigs();
+    }
+
+    public _onChangeViewClick(): void {
+        this.dialogs
+            .open<SGGenericModelDeviceViewFormData>(
+                new PolymorpheusComponent(SGChartsConfigurationComponent, this.injector),
+                {
+                    data: <SGChartsConfigurationDialogData>{
+                        models: this.appQuery.getValue().config.models
+                    },
+                    dismissible: true,
+                    size: "page"
+                }
+            )
+            .subscribe();
     }
 
     private getChartConfigs(): SGChartWrapperConfig[] {

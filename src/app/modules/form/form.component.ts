@@ -51,7 +51,10 @@ export class SGFormComponent implements OnChanges, OnDestroy {
     }
 
     private unsubscribeFromForm(): void {
-        this.config?.name && this.formsManager.unsubscribe(this.config.name);
+        if (this.config?.name) {
+            this.formsManager.unsubscribe(this.config.name);
+            this.formsManager.destroy(this.config.name);
+        }
     }
 
     private getFormGroup(): UntypedFormGroup {
@@ -63,6 +66,7 @@ export class SGFormComponent implements OnChanges, OnDestroy {
                 })
             });
         });
+        console.log(controls);
         return new FormGroup({...controls});
     }
 }

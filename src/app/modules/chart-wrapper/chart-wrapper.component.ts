@@ -41,6 +41,10 @@ export class SGChartWrapperComponent implements OnChanges {
         datasets: []
     };
 
+    private readonly MAXIMUM_POINTS_NUMBERS_INTERVAL: number = 20;
+
+    private readonly OFFSET_POINTS_TO_REMOVE: number[] = Array(10).fill(0);
+
     @HostBinding("class.sg-chart-wrapper")
     private hostClass: boolean = true;
 
@@ -69,8 +73,14 @@ export class SGChartWrapperComponent implements OnChanges {
     public updateChartData(): void {
         if (this.chart) {
             this.data[this.orientation][this.config.modelFieldKey].forEach((val, idx) => {
+                if (this._chartData.datasets[idx].data.length > this.MAXIMUM_POINTS_NUMBERS_INTERVAL) {
+                    this.OFFSET_POINTS_TO_REMOVE.forEach(() => this._chartData.datasets[idx].data.shift());
+                }
                 this._chartData.datasets[idx].data.push(val.output[this.config.fieldKey]);
             });
+            if (this._chartData.labels.length > this.MAXIMUM_POINTS_NUMBERS_INTERVAL) {
+                this.OFFSET_POINTS_TO_REMOVE.forEach(() => this._chartData.labels.shift());
+            }
             this._chartData.labels.push(
                 `${this._chartData.labels.length}`,
             );

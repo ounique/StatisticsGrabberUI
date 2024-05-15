@@ -1,0 +1,38 @@
+@import "../../common/colors.less";
+
+.sg-application-status {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    border-radius: 6px;
+    overflow: hidden;
+
+    &__wrapper {
+        position: relative;
+        display: flex;
+        flex: 1 1 auto;
+        height: 100%;
+        overflow: hidden;
+        padding: 4px 8px;
+        background: var(--tui-success-fill);
+        color: var(--tui-base-01);
+        cursor: pointer;
+
+        &._danger {
+            background: var(--tui-support-06);
+            color: var(--tui-base-01);
+        }
+    }
+
+    &__template {
+        &-text {
+            display: flex;
+            align-items: center;
+        }
+
+        &-icon {
+            margin-right: 4px;
+        }
+    }
+}
