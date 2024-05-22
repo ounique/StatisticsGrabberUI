@@ -39,7 +39,6 @@
         }
 
         &-popup {
-            position: relative;
             display: flex;
             flex-wrap: wrap;
             flex: 1 1 auto;
@@ -48,7 +47,11 @@
 
             &-title {
                 display: flex;
+                align-items: flex-end;
+                flex: 1 1 auto;
+                overflow: hidden;
                 margin-bottom: 12px;
+                max-height: 24px;
             }
 
             &-item {

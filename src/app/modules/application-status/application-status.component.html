@@ -1,10 +1,49 @@
 <ng-container *tuiLet="_appStatus$ | async as appStatus">
     <div class="sg-application-status__wrapper"
          [class._danger]="appStatus === _appStatuses.RUNNING"
+         [class._primary]="appStatus === _appStatuses.WAITING_START || appStatus === _appStatuses.WAITING_STOP"
     >
-        <ng-template [ngTemplateOutlet]="appStatus === _appStatuses.IDLE ? startAppTemplate : stopAppTemplate"></ng-template>
+        <ng-container [ngSwitch]="appStatus">
+            <ng-template
+                *ngSwitchCase="_appStatuses.IDLE"
+                [ngTemplateOutlet]="startAppTemplate"
+            >
+            </ng-template>
+            <ng-template
+                *ngSwitchCase="_appStatuses.WAITING_START"
+                [ngTemplateOutlet]="waitingAppTemplate"
+                [ngTemplateOutletContext]="{ label: 'Ожидание запуска' }"
+            >
+            </ng-template>
+            <ng-template
+                *ngSwitchCase="_appStatuses.WAITING_STOP"
+                [ngTemplateOutlet]="waitingAppTemplate"
+                [ngTemplateOutletContext]="{ label: 'Ожидание остановки' }"
+            >
+            </ng-template>
+            <ng-template
+                *ngSwitchCase="_appStatuses.RUNNING"
+                [ngTemplateOutlet]="stopAppTemplate"
+            >
+            </ng-template>
+        </ng-container>
     </div>
 </ng-container>
+
+<ng-template #waitingAppTemplate
+             let-label="label"
+>
+    <tui-loader
+        class="sg-application-status__template-icon"
+        overlay="false"
+        size="s"
+        showLoader="true"
+    >
+    </tui-loader>
+    <span class="sg-application-status__template-text">
+        {{ label }}
+    </span>
+</ng-template>
 
 <ng-template #startAppTemplate>
     <tui-svg class="sg-application-status__template-icon"
