@@ -5,23 +5,29 @@ import {SGAppQuery} from "../../state/app.query";
 import {SGChartWrapperConfig} from "../chart-wrapper/models/chart-wrapper.model";
 import {SGModelName, SGModelPropertyConfig, SGModelsConfig} from "../../models/core/app.model";
 import {SGChartWrapperComponent} from "../chart-wrapper/chart-wrapper.component";
-import {TuiButtonModule, TuiDialogService} from "@taiga-ui/core";
+import {TuiButtonModule, TuiDialogService, TuiSvgModule} from "@taiga-ui/core";
 import {
-    SGGenericModelDeviceViewFormComponent,
     SGGenericModelDeviceViewFormData
 } from "../generic-model-device-view/components/generic-model-device-view-form.component";
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {SGChartsConfigurationComponent} from "../charts-configuration/charts-configuration.component";
 import {SGChartsConfigurationDialogData} from "../charts-configuration/model/charts-configuration.model";
+import {TuiLetModule} from "@taiga-ui/cdk";
+import {SGServerApplicationStatus} from "../../models/core/server.model";
+import {TuiMarkerIconModule} from "@taiga-ui/kit";
 
 @Component({
     selector: "sg-charts-grid",
     templateUrl: "./charts-grid.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, SGChartWrapperComponent, TuiButtonModule]
+    imports: [CommonModule, SGChartWrapperComponent, TuiButtonModule, TuiLetModule, TuiSvgModule, TuiMarkerIconModule]
 })
 export class SGChartsGridComponent implements OnInit {
+
+    public _appStatus$ = this.appQuery.applicationStatus$;
+
+    public _appStatuses: typeof SGServerApplicationStatus = SGServerApplicationStatus;
 
     public _chartConfigs: SGChartWrapperConfig[] = [];
 

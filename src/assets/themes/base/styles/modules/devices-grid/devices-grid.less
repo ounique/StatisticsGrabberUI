@@ -1,6 +1,9 @@
+@import "../../common/mixins.less";
+
 .sg-devices-grid {
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
     padding: 24px 12px 0 12px;
 
     &__separator {
@@ -48,6 +51,12 @@
                 margin: 8px;
                 flex-basis: calc(100% / @items-in-row - 8px * 2);
             }
+        }
+    }
+
+    &__template {
+        &-no-data {
+            .no-data-template();
         }
     }
 }

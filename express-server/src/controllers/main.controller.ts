@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {SGMockController, SGMockControllerMethod, SGMockRequest} from "../decorators/controller.decorator";
-import {SGServerApplicationStatus, SGServerStatus} from "../../../src/app/models/core/server.model";
+import {SGServerStatus} from "../../../src/app/models/core/server.model";
 import {SGMockMainService} from "../services/main.service";
 import {SGModelName, SGModelOrientation} from "../../../src/app/models/core/app.model";
 
@@ -17,7 +17,7 @@ export class SGMainController {
     })
     private healthCheck(request: Request, response: Response): void {
         response.status(200).json(<SGServerStatus>{
-            applicationStatus: SGServerApplicationStatus.IDLE,
+            applicationStatus: this.mockMainService.getApplicationStatus(),
             server1: true,
             server2: false,
             server3: true,
@@ -47,8 +47,6 @@ export class SGMainController {
         const number = request.query.number as string;
         const data = request.body;
 
-        console.log(wing, modelType, number, request.body);
-
         this.mockMainService.updateModelParameters(
             modelType as SGModelName,
             wing as SGModelOrientation,
@@ -56,5 +54,21 @@ export class SGMainController {
             data
         );
         response.status(200).json();
+    }
+
+    @SGMockRequest({
+        path: "/application[:]start",
+        method: SGMockControllerMethod.POST
+    })
+    private startApplication(request: Request, response: Response): void {
+        response.status(200).json(this.mockMainService.updateAppStatus());
+    }
+
+    @SGMockRequest({
+        path: "/application[:]stop",
+        method: SGMockControllerMethod.POST
+    })
+    private stopApplication(request: Request, response: Response): void {
+        response.status(200).json(this.mockMainService.updateAppStatus());
     }
 }

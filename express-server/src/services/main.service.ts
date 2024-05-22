@@ -19,8 +19,19 @@ import {
     SGBmsModelParameters
 } from "../../../src/app/models/core/bms-model.model";
 import {SGModelName, SGModelOrientation} from "../../../src/app/models/core/app.model";
+import {SGServerApplicationStatus} from "../../../src/app/models/core/server.model";
 
 export class SGMockMainService {
+
+    private applicationStatus: SGServerApplicationStatus = SGServerApplicationStatus.IDLE;
+
+    private applicationStatusTransitions: Record<SGServerApplicationStatus, SGServerApplicationStatus> = {
+        [SGServerApplicationStatus.IDLE]: SGServerApplicationStatus.WAITING_START,
+        [SGServerApplicationStatus.WAITING_START]: SGServerApplicationStatus.RUNNING,
+        [SGServerApplicationStatus.RUNNING]: SGServerApplicationStatus.WAITING_STOP,
+        [SGServerApplicationStatus.WAITING_STOP]: SGServerApplicationStatus.IDLE,
+        [SGServerApplicationStatus.ERROR]: SGServerApplicationStatus.ERROR
+    };
 
     private modelOutputs: SGModelsOutput = {
         leftWing: this.generateWingData(),
@@ -32,6 +43,18 @@ export class SGMockMainService {
             leftWing: this.updateWingModelOutputs(this.modelOutputs.leftWing),
             rightWing: this.updateWingModelOutputs(this.modelOutputs.rightWing),
         };
+    }
+
+    public getApplicationStatus(): SGServerApplicationStatus {
+        return this.applicationStatus;
+    }
+
+    public updateAppStatus(): SGServerApplicationStatus {
+        this.setNextStatus();
+        setTimeout(() => {
+            this.setNextStatus();
+        }, 3000);
+        return this.applicationStatus;
     }
 
     public getModelsOutput(): SGModelsOutput {
@@ -256,5 +279,9 @@ export class SGMockMainService {
 
     private generateRuModelInput(): SGRuModelInput {
         return {};
+    }
+
+    private setNextStatus(): void {
+        this.applicationStatus = this.applicationStatusTransitions[this.applicationStatus];
     }
 }

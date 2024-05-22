@@ -10,7 +10,6 @@ import {
     TuiSvgModule,
     TuiTooltipModule
 } from "@taiga-ui/core";
-import {SGApplicationStatusFormService} from "./services/application-status-form.service";
 import {TuiLetModule} from "@taiga-ui/cdk";
 import {SGAppService} from "../../state/app.service";
 import {
@@ -24,7 +23,8 @@ import {
     SGModelsParametersConfigurationDialogData
 } from "../models-parameters-configuration/model/models-parameters-configuration.model";
 import {TUI_PROMPT} from "@taiga-ui/kit";
-import {tap} from "rxjs";
+import {EMPTY, switchMap} from "rxjs";
+import {SGApplicationStatusService} from "../../services/application-status.service";
 
 @Component({
     selector: "sg-application-status",
@@ -33,12 +33,12 @@ import {tap} from "rxjs";
     standalone: true,
     imports: [CommonModule, TuiTooltipModule, TuiHintModule, TuiButtonModule, TuiSvgModule, TuiLetModule, TuiLoaderModule],
     providers: [
-        SGApplicationStatusFormService
+        SGApplicationStatusService
     ]
 })
 export class SGApplicationStatusComponent {
 
-    public _appStatus$ = this.appQuery.select(state => state.serverStatus.applicationStatus);
+    public _appStatus$ = this.appQuery.applicationStatus$;
 
     public _appStatuses: typeof SGServerApplicationStatus = SGServerApplicationStatus;
 
@@ -46,10 +46,8 @@ export class SGApplicationStatusComponent {
         [SGServerApplicationStatus.IDLE]: () => this.handleStartApplication(),
         [SGServerApplicationStatus.RUNNING]: () => this.handleStopApplication(),
         [SGServerApplicationStatus.WAITING_START]: () => {
-            this.updateAppStatus(SGServerApplicationStatus.RUNNING);
         },
         [SGServerApplicationStatus.WAITING_STOP]: () => {
-            this.updateAppStatus(SGServerApplicationStatus.IDLE);
         },
         [SGServerApplicationStatus.ERROR]: () => {
         }
@@ -60,6 +58,7 @@ export class SGApplicationStatusComponent {
 
     constructor(private appQuery: SGAppQuery,
                 private appService: SGAppService,
+                private applicationStatusService: SGApplicationStatusService,
                 @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
                 @Inject(Injector) private readonly injector: Injector) {
     }
@@ -70,7 +69,9 @@ export class SGApplicationStatusComponent {
     }
 
     private handleStartApplication(): void {
-        this.updateAppStatus(SGServerApplicationStatus.WAITING_START);
+        this.applicationStatusService.startApplication({})
+            .pipe()
+            .subscribe();
         return;
         this.dialogs
             .open<SGGenericModelDeviceViewFormData>(
@@ -97,10 +98,13 @@ export class SGApplicationStatusComponent {
                 },
             })
             .pipe(
-                tap((response) => {
+                switchMap((response: boolean) => {
                     if (response) {
-                        this.updateAppStatus(SGServerApplicationStatus.WAITING_STOP);
+                        return this.applicationStatusService.stopApplication()
+                            .pipe();
                     }
+
+                    return EMPTY;
                 })
             )
             .subscribe();

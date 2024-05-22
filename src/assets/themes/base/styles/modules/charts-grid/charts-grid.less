@@ -1,3 +1,5 @@
+@import "../../common/mixins.less";
+
 .sg-charts-grid {
     @charts-in-row: 4;
 
@@ -15,5 +17,11 @@
         max-width: calc(100% / @charts-in-row - 8px * 2);
         min-width: calc(100% / @charts-in-row - 8px * 2);
         margin: 8px;
+    }
+
+    &__template {
+        &-no-data {
+            .no-data-template();
+        }
     }
 }

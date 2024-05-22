@@ -1,26 +1,56 @@
-<button
-    tuiButton
-    size="s"
-    [appearance]="'secondary'"
-    (click)="_onChangeViewClick()"
->
-    Изменить отображение
-</button>
-<div class="sg-charts-grid__container">
-    <ng-container
-        *ngFor="let config of _chartConfigs;"
-    >
-        <sg-chart-wrapper
-            class="sg-charts-grid__chart"
-            orientation="leftWing"
-            [config]="config"
-            [data]="data"
-        ></sg-chart-wrapper>
-        <sg-chart-wrapper
-            class="sg-charts-grid__chart"
-            orientation="rightWing"
-            [config]="config"
-            [data]="data"
-        ></sg-chart-wrapper>
+<ng-container *tuiLet="_appStatus$ | async as appStatus">
+    <ng-container [ngSwitch]="appStatus">
+        <ng-template
+            *ngSwitchCase="_appStatuses.RUNNING"
+            [ngTemplateOutlet]="chartsTemplate"
+        ></ng-template>
+        <ng-template
+            *ngSwitchDefault
+            [ngTemplateOutlet]="noDataTemplate"
+        ></ng-template>
     </ng-container>
-</div>
+</ng-container>
+
+<ng-template #noDataTemplate>
+    <div class="sg-charts-grid__template-no-data">
+        <tui-marker-icon
+            class="sg-charts-grid__template-no-data-icon"
+            mode="white"
+            new
+            size="xl"
+            src="tuiIconInboxLarge"
+        ></tui-marker-icon>
+        <span class="sg-charts-grid__template-no-data-text tui-text_body-l">
+            Нет данных
+        </span>
+    </div>
+</ng-template>
+
+<ng-template #chartsTemplate>
+    <button
+        tuiButton
+        size="s"
+        [appearance]="'secondary'"
+        (click)="_onChangeViewClick()"
+    >
+        Изменить отображение
+    </button>
+    <div class="sg-charts-grid__container">
+        <ng-container
+            *ngFor="let config of _chartConfigs;"
+        >
+            <sg-chart-wrapper
+                class="sg-charts-grid__chart"
+                orientation="leftWing"
+                [config]="config"
+                [data]="data"
+            ></sg-chart-wrapper>
+            <sg-chart-wrapper
+                class="sg-charts-grid__chart"
+                orientation="rightWing"
+                [config]="config"
+                [data]="data"
+            ></sg-chart-wrapper>
+        </ng-container>
+    </div>
+</ng-template>

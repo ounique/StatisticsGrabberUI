@@ -1,17 +1,39 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {interval, Observable, switchMap, tap} from "rxjs";
 import {SGServerStatus} from "../models/core/server.model";
+import {SGDataService} from "./data.service";
+import {SGAppService} from "../state/app.service";
 
 @Injectable({
     providedIn: "root"
 })
 export class SGHealthDataService {
 
-    constructor(private http: HttpClient) {
+    private delay: number = 5000;
+
+    constructor(private dataService: SGDataService,
+                private appService: SGAppService) {
     }
 
     public getHealthCheck(): Observable<SGServerStatus> {
-        return this.http.get<SGServerStatus>("http://localhost:3000/api/health");
+        return this.dataService.getHealthCheck()
+            .pipe(
+                tap((status: SGServerStatus) => {
+                    this.appService.updateServerStatus(status);
+                }),
+                switchMap(() => {
+                    return interval(this.delay)
+                        .pipe(
+                            switchMap(() => {
+                                return this.dataService.getHealthCheck()
+                                    .pipe(
+                                        tap((status: SGServerStatus) => {
+                                            this.appService.updateServerStatus(status);
+                                        })
+                                    )
+                            })
+                        );
+                })
+            );
     }
 }

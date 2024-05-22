@@ -1,18 +1,49 @@
-<ng-template [ngTemplateOutlet]="devicesTemplate"
-             [ngTemplateOutletContext]="{
-                 wingData: data.leftWing,
-                 wing: _wing.LEFT_WING,
-                 title: 'Левое Крыло'
-             }"
-></ng-template>
-<div class="sg-devices-grid__separator"></div>
-<ng-template [ngTemplateOutlet]="devicesTemplate"
-             [ngTemplateOutletContext]="{
-                 wingData: data.rightWing,
-                 wing: _wing.RIGHT_WING,
-                 title: 'Правое Крыло'
-             }"
-></ng-template>
+<ng-container *tuiLet="_appStatus$ | async as appStatus">
+    <ng-container [ngSwitch]="appStatus">
+        <ng-template
+            *ngSwitchCase="_appStatuses.RUNNING"
+            [ngTemplateOutlet]="mainTemplate"
+        ></ng-template>
+        <ng-template
+            *ngSwitchDefault
+            [ngTemplateOutlet]="noDataTemplate"
+        ></ng-template>
+    </ng-container>
+</ng-container>
+
+<ng-template #noDataTemplate>
+    <div class="sg-devices-grid__template-no-data">
+        <tui-marker-icon
+            class="sg-devices-grid__template-no-data-icon"
+            mode="white"
+            new
+            size="xl"
+            src="tuiIconInboxLarge"
+        ></tui-marker-icon>
+        <span class="sg-devices-grid__template-no-data-text tui-text_body-l">
+            Нет данных
+        </span>
+    </div>
+</ng-template>
+
+<ng-template #mainTemplate>
+    <ng-template
+        [ngTemplateOutlet]="devicesTemplate"
+        [ngTemplateOutletContext]="{
+            wingData: data.leftWing,
+            wing: _wing.LEFT_WING,
+            title: 'Левое Крыло'
+        }">
+    </ng-template>
+    <div class="sg-devices-grid__separator"></div>
+    <ng-template [ngTemplateOutlet]="devicesTemplate"
+                 [ngTemplateOutletContext]="{
+                     wingData: data.rightWing,
+                     wing: _wing.RIGHT_WING,
+                     title: 'Правое Крыло'
+                 }"
+    ></ng-template>
+</ng-template>
 
 <ng-template #devicesTemplate
              let-wingData="wingData"
