@@ -23,7 +23,7 @@ import {
     SGModelsParametersConfigurationDialogData
 } from "../models-parameters-configuration/model/models-parameters-configuration.model";
 import {TUI_PROMPT} from "@taiga-ui/kit";
-import {EMPTY, switchMap} from "rxjs";
+import {EMPTY, switchMap, tap} from "rxjs";
 import {SGApplicationStatusService} from "../../services/application-status.service";
 
 @Component({
@@ -69,21 +69,18 @@ export class SGApplicationStatusComponent {
     }
 
     private handleStartApplication(): void {
-        this.applicationStatusService.startApplication({})
-            .pipe()
-            .subscribe();
-        return;
         this.dialogs
             .open<SGGenericModelDeviceViewFormData>(
                 new PolymorpheusComponent(SGModelsParametersConfigurationComponent, this.injector),
                 {
                     data: <SGModelsParametersConfigurationDialogData>{
-                        models: this.appQuery.getValue().config.models
+                        data: undefined
                     },
                     dismissible: true,
                     size: "page"
                 }
             )
+            .pipe()
             .subscribe();
     }
 

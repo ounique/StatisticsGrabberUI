@@ -1,0 +1,110 @@
+.sg-model-parameters-configuration {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+    &__title {
+        margin-top: 24px;
+        margin-bottom: 40px;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        justify-content: center;
+        align-items: center;
+
+        &-wrapper {
+            align-self: flex-start;
+            padding: 24px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    &__block {
+        position: relative;
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        margin: 0 24px;
+        max-width: 300px;
+
+        &-title {
+            margin-bottom: 12px;
+            min-height: 80px;
+        }
+
+        &-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            overflow: hidden;
+
+            & > *:not(:last-child) {
+                margin-bottom: 8px;
+            }
+        }
+
+        &-checkbox {
+            &-unit {
+                color: var(--tui-text-03);
+            }
+        }
+    }
+
+    &__toolbar {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        flex: 1 1 auto;
+        border-top: 1px solid var(--tui-base-03);
+        padding: 12px 24px;
+        background: var(--tui-base-01);
+
+        &-button {
+            &:not(:last-child) {
+                margin-right: 8px;
+            }
+        }
+    }
+
+    &__menu {
+        display: flex;
+        flex-direction: column;
+
+        &-appearance {
+            margin-bottom: 12px;
+        }
+
+        &-items {
+            display: flex;
+            flex-direction: column;
+
+            & > * {
+                max-width: 260px;
+                min-width: 260px;
+                margin-bottom: 4px;
+            }
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex: 1 1 auto;
+        width: 100%;
+        background: var(--tui-primary);
+        margin-left: 24px;
+    }
+
+    &__view {
+        display: flex;
+        flex: 1 1 auto;
+        overflow: hidden;
+    }
+}

@@ -1,5 +1,5 @@
-import {SGModelsConfig} from "../../../models/core/app.model";
+import {SGApplicationStartModels} from "../../../models/core/application-start.model";
 
 export type SGModelsParametersConfigurationDialogData = Readonly<{
-    models: SGModelsConfig[];
+    data: SGApplicationStartModels;
 }>;
