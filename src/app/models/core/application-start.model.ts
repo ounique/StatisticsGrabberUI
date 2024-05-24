@@ -13,7 +13,7 @@ export interface SGApplicationStartModelsWingData {
     readonly bms: SGApplicationStartModelsWingModelData<SGBmsModelInput, SGBmsModelParameters>[];
 }
 
-export interface SGApplicationStartModelsWingModelData<Input, Parameters> {
+export interface SGApplicationStartModelsWingModelData<Input = any, Parameters = any> {
     readonly input: Input;
     readonly parameters: Parameters;
 }

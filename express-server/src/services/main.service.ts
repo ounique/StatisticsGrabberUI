@@ -20,6 +20,7 @@ import {
 } from "../../../src/app/models/core/bms-model.model";
 import {SGModelName, SGModelOrientation} from "../../../src/app/models/core/app.model";
 import {SGServerApplicationStatus} from "../../../src/app/models/core/server.model";
+import {SGApplicationStartModels} from "../../../src/app/models/core/application-start.model";
 
 export class SGMockMainService {
 
@@ -37,6 +38,12 @@ export class SGMockMainService {
         leftWing: this.generateWingData(),
         rightWing: this.generateWingData()
     };
+
+    private startProps: SGApplicationStartModels = this.getFirstModelStartProps();
+
+    public getModelStartProps(): SGApplicationStartModels {
+        return this.startProps;
+    }
 
     public updateModelOutputs(): void {
         this.modelOutputs = {
@@ -283,5 +290,17 @@ export class SGMockMainService {
 
     private setNextStatus(): void {
         this.applicationStatus = this.applicationStatusTransitions[this.applicationStatus];
+    }
+
+    private getFirstModelStartProps(): SGApplicationStartModels {
+        this.modelOutputs.leftWing;
+        return {
+            leftWing: {
+                ...this.modelOutputs.leftWing
+            },
+            rightWing: {
+                ...this.modelOutputs.rightWing
+            }
+        };
     }
 }

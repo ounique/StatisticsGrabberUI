@@ -1,58 +1,95 @@
-<div class="sg-model-parameters-configuration__container">
-    <div class="sg-model-parameters-configuration__title tui-text_h2">
-        <span>{{ "Настройки запуска" }}</span>
-    </div>
-    <div class="sg-model-parameters-configuration__container-wrapper">
-        <div class="sg-model-parameters-configuration__menu">
-            <tui-checkbox-labeled
-                class="sg-model-parameters-configuration__menu-appearance"
+<ng-container *tuiLet="_isLoading$ | async as isLoading">
+    <div class="sg-model-parameters-configuration__container">
+        <div class="sg-model-parameters-configuration__title tui-text_h2">
+            <span>{{ "Настройки запуска" }}</span>
+        </div>
+        <div class="sg-model-parameters-configuration__container-wrapper">
+<!--            <div class="sg-model-parameters-configuration__menu">-->
+<!--                <tui-checkbox-labeled-->
+<!--                    class="sg-model-parameters-configuration__menu-appearance"-->
+<!--                >-->
+<!--                    Назначить параметры независимо-->
+<!--                </tui-checkbox-labeled>-->
+<!--            </div>-->
+            <tui-notification
+                class="sg-model-parameters-configuration__alert"
+                status="neutral"
             >
-                Назначить параметры независимо
-            </tui-checkbox-labeled>
-        </div>
-        <div class="sg-model-parameters-configuration__view">
-            <ng-template [ngTemplateOutlet]="_isMultipleView ? multipleView : singleView"></ng-template>
+                Выберите устройство и заполните параметры для запуска
+            </tui-notification>
+            <div class="sg-model-parameters-configuration__view">
+                <ng-template
+                    [ngTemplateOutlet]="_isMultipleView ? multipleView : singleView"
+                    [ngTemplateOutletContext]="{
+                        isLoading: isLoading
+                    }"
+                ></ng-template>
+            </div>
         </div>
     </div>
-</div>
-<div class="sg-model-parameters-configuration__toolbar">
-    <button
-        class="sg-model-parameters-configuration__toolbar-button"
-        tuiButton
-        size="m"
-        appearance="secondary"
-    >
-        Назад
-    </button>
-    <button
-        class="sg-model-parameters-configuration__toolbar-button"
-        tuiButton
-        size="m"
-    >
-        Запустить
-    </button>
-</div>
+    <div class="sg-model-parameters-configuration__toolbar">
+        <button
+            class="sg-model-parameters-configuration__toolbar-button"
+            tuiButton
+            size="m"
+            appearance="secondary"
+            (click)="_onBackClick()"
+        >
+            Назад
+        </button>
+        <button
+            class="sg-model-parameters-configuration__toolbar-button"
+            tuiButton
+            size="m"
+        >
+            Запустить
+        </button>
+    </div>
+</ng-container>
 
-<ng-template #singleView>
+<ng-template #singleView
+             let-isLoading="isLoading"
+>
     <div class="sg-model-parameters-configuration__menu-items">
         <button
             tuiButton
             size="s"
             *ngFor="let btn of _singleMenuItems;"
             [appearance]="btn.id === _selectedMenuItem ? 'primary' : 'secondary'"
+            [showLoader]="isLoading"
             (click)="_onMenuItemClick(btn.id)"
         >
             {{ btn.text }}
         </button>
     </div>
     <div class="sg-model-parameters-configuration__form">
-        {{ _selectedMenuItem }}
+        <sg-form
+            *ngIf="_formConfig; else noDataTemplate;"
+            [config]="_formConfig"
+        ></sg-form>
     </div>
 </ng-template>
-<ng-template #multipleView>
+<ng-template #multipleView
+             let-isLoading="isLoading"
+>
     <div class="sg-model-parameters-configuration__menu-items">
     </div>
     <div class="sg-model-parameters-configuration__form">
         {{ _selectedMenuItem }}
+    </div>
+</ng-template>
+
+<ng-template #noDataTemplate>
+    <div class="sg-model-parameters-configuration__template-no-data">
+        <tui-marker-icon
+            class="sg-model-parameters-configuration__template-no-data-icon"
+            mode="white"
+            new
+            size="xl"
+            src="tuiIconInboxLarge"
+        ></tui-marker-icon>
+        <span class="sg-model-parameters-configuration__template-no-data-text tui-text_body-l">
+            Нет данных
+        </span>
     </div>
 </ng-template>

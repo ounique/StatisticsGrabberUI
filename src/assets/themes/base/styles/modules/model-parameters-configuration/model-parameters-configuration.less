@@ -1,3 +1,5 @@
+@import "../../common/mixins.less";
+
 .sg-model-parameters-configuration {
     display: flex;
     flex-direction: column;
@@ -98,7 +100,6 @@
         display: flex;
         flex: 1 1 auto;
         width: 100%;
-        background: var(--tui-primary);
         margin-left: 24px;
     }
 
@@ -106,5 +107,17 @@
         display: flex;
         flex: 1 1 auto;
         overflow: hidden;
+    }
+
+    &__alert {
+        max-width: 260px;
+        min-width: 260px;
+        margin-bottom: 12px;
+    }
+
+    &__template {
+        &-no-data {
+            .no-data-template();
+        }
     }
 }

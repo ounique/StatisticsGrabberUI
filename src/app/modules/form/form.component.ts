@@ -61,12 +61,14 @@ export class SGFormComponent implements OnChanges, OnDestroy {
         const controls: Record<string, FormControl> = {};
         this.config.groups.forEach((group: SGFormGroupConfig) => {
             group.innerGroups.forEach((innerGroup: SGFormInnerGroupConfig) => {
+                const innerGroupControls: Record<string, FormControl> = {};
                 innerGroup.controls.forEach((control: SGFormControlConfig) => {
                     controls[control.name] = new FormControl(control.value, Validators.required);
+                    // innerGroupControls[control.name] = new FormControl(control.value, Validators.required);
                 })
+                this.formsManager.upsert(innerGroup.name, new FormGroup({...innerGroupControls}));
             });
         });
-        console.log(controls);
         return new FormGroup({...controls});
     }
 }

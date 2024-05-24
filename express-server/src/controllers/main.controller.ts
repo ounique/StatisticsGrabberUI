@@ -71,4 +71,12 @@ export class SGMainController {
     private stopApplication(request: Request, response: Response): void {
         response.status(200).json(this.mockMainService.updateAppStatus());
     }
+
+    @SGMockRequest({
+        path: "/initial-conditions",
+        method: SGMockControllerMethod.GET
+    })
+    private getInitialConditions(request: Request, response: Response): void {
+        response.status(200).json(this.mockMainService.getModelStartProps());
+    }
 }

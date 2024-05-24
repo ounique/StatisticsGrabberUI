@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {SGModelsOutput, SGModelUpdateRequest} from "../models/core/models-status.model";
 import {SGModelName, SGModelOrientation} from "../models/core/app.model";
 import {SGServerApplicationStatus, SGServerStatus} from "../models/core/server.model";
+import {SGApplicationStartModels} from "../models/core/application-start.model";
 
 @Injectable({
     providedIn: "root"
@@ -41,5 +42,9 @@ export class SGDataService {
 
     public stopApplication(): Observable<SGServerApplicationStatus> {
         return this.http.post<SGServerApplicationStatus>("http://localhost:3000/api/application:stop", {});
+    }
+
+    public getInitialConditions(): Observable<SGApplicationStartModels> {
+        return this.http.get<SGApplicationStartModels>("http://localhost:3000/api/initial-conditions");
     }
 }
