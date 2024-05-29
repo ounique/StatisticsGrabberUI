@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {SGModelsOutput, SGModelUpdateRequest} from "../models/core/models-status.model";
 import {SGModelName, SGModelOrientation} from "../models/core/app.model";
 import {SGServerApplicationStatus, SGServerStatus} from "../models/core/server.model";
-import {SGApplicationStartModels} from "../models/core/application-start.model";
+import {SGApplicationStartModels, SGApplicationStartSingleRequest} from "../models/core/application-start.model";
 
 @Injectable({
     providedIn: "root"
@@ -36,7 +36,7 @@ export class SGDataService {
         return this.http.get<SGServerApplicationStatus>("http://localhost:3000/api/application:status");
     }
 
-    public startApplication(data: unknown): Observable<SGServerApplicationStatus> {
+    public startApplication(data: SGApplicationStartSingleRequest): Observable<SGServerApplicationStatus> {
         return this.http.post<SGServerApplicationStatus>("http://localhost:3000/api/application:start", data);
     }
 

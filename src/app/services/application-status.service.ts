@@ -3,6 +3,7 @@ import {Observable, tap} from "rxjs";
 import {SGServerApplicationStatus} from "../models/core/server.model";
 import {SGDataService} from "./data.service";
 import {SGAppService} from "../state/app.service";
+import {SGApplicationStartSingleRequest} from "../models/core/application-start.model";
 
 @Injectable()
 export class SGApplicationStatusService {
@@ -11,8 +12,8 @@ export class SGApplicationStatusService {
                 private appService: SGAppService) {
     }
 
-    public startApplication(data: unknown): Observable<SGServerApplicationStatus> {
-        return this.dataService.startApplication({})
+    public startApplication(data: SGApplicationStartSingleRequest): Observable<SGServerApplicationStatus> {
+        return this.dataService.startApplication(data)
             .pipe(
                 tap((status: SGServerApplicationStatus) => {
                     this.appService.updateApplicationStatus(status);

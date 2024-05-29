@@ -17,3 +17,9 @@ export interface SGApplicationStartModelsWingModelData<Input = any, Parameters =
     readonly input: Input;
     readonly parameters: Parameters;
 }
+
+export interface SGApplicationStartSingleRequest {
+    readonly bms: SGApplicationStartModelsWingModelData<SGBmsModelInput, SGBmsModelParameters>;
+    readonly ru: SGApplicationStartModelsWingModelData<SGRuModelInput, SGRuModelParameters>;
+    readonly impeller: SGApplicationStartModelsWingModelData<SGImpellerModelInput, SGImpellerModelParameters>;
+}

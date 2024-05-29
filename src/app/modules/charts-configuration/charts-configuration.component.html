@@ -1,4 +1,7 @@
-<div class="sg-charts-configuration__container">
+<form
+    class="sg-charts-configuration__container"
+    [formGroup]="_nativeFormGroup"
+>
     <div class="sg-charts-configuration__title tui-text_h2">
         <span>{{ "Изменение отображаемых параметров" }}</span>
     </div>
@@ -13,6 +16,7 @@
                 <tui-checkbox-labeled
                     class="sg-charts-configuration__block-checkbox"
                     *ngFor="let param of model.outputs;"
+                    [formControlName]="model.name + '_' + param.name"
                 >
                     {{ param.description }} <span class="sg-charts-configuration__block-checkbox-unit">{{ param.units }}</span>
                 </tui-checkbox-labeled>
@@ -25,24 +29,27 @@
             <div class="sg-charts-configuration__block-container">
                 <tui-checkbox-labeled
                     class="sg-charts-configuration__block-checkbox"
+                    [formControlName]="'leftWing'"
                 >
                     {{ "Левое" }}
                 </tui-checkbox-labeled>
                 <tui-checkbox-labeled
                     class="sg-charts-configuration__block-checkbox"
+                    [formControlName]="'rightWing'"
                 >
                     {{ "Правое" }}
                 </tui-checkbox-labeled>
             </div>
         </div>
     </div>
-</div>
+</form>
 <div class="sg-charts-configuration__toolbar">
     <button
         class="sg-charts-configuration__toolbar-button"
         tuiButton
         size="m"
         appearance="secondary"
+        (click)="_onCancelClick()"
     >
         Назад
     </button>
@@ -50,6 +57,7 @@
         class="sg-charts-configuration__toolbar-button"
         tuiButton
         size="m"
+        (click)="_onSaveClick()"
     >
         Сохранить
     </button>

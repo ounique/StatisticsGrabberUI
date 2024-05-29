@@ -83,9 +83,20 @@ export class SGModelsParametersConfigurationComponent implements OnInit {
         this.subscribeToGetInitialConditions();
     }
 
-    public start(): void {
-        this.applicationStatusService.startApplication({})
-            .pipe()
+    public _onStartClick(): void {
+        const bmsModel = this.initialConditions.leftWing.bms[0];
+        const ruModel = this.initialConditions.leftWing.ru[0];
+        const impellerModel = this.initialConditions.leftWing.impellers[0];
+
+        this.applicationStatusService.startApplication({
+            bms: bmsModel,
+            ru: ruModel,
+            impeller: impellerModel
+        })
+            .pipe(
+                tap(() => this.context.completeWith()),
+                untilDestroyed(this)
+            )
             .subscribe();
     }
 
@@ -115,13 +126,35 @@ export class SGModelsParametersConfigurationComponent implements OnInit {
     }
 
     private subscribeOnFormValueChanges(): void {
-        this.formManager.valueChanges("inputsInnerGroup")
+        this.formManager.valueChanges("modelParametersInputsForm")
             .pipe(
                 tap((value) => {
-                    console.log(value);
+                    if (this._selectedMenuItem) {
+                        this.fillCurrentInputsOutputs(value);
+                    }
                 }),
                 untilDestroyed(this)
             )
             .subscribe();
+    }
+
+    private fillCurrentInputsOutputs(value: Record<string, number>): void {
+        const config = this.appQuery.getValue().config.models
+            .find((model) => model.name === this._selectedMenuItem);
+
+        this.initialConditions.leftWing[this.modelNameToFieldKeyMapping[this._selectedMenuItem]][0] = {
+            input: config.inputs.reduce((obj, val) => {
+                return {
+                    ...obj,
+                    [val.name]: value[val.name]
+                };
+            }, {}),
+            parameters: config.properties.reduce((obj, val) => {
+                return {
+                    ...obj,
+                    [val.name]: value[val.name]
+                };
+            }, {} as any)
+        };
     }
 }
