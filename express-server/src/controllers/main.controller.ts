@@ -19,7 +19,7 @@ export class SGMainController {
         response.status(200).json(<SGServerStatus>{
             applicationStatus: this.mockMainService.getApplicationStatus(),
             server1: true,
-            server2: false,
+            server2: true,
             server3: true,
             server4: true
         })

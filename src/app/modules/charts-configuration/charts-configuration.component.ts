@@ -70,11 +70,11 @@ export class SGChartsConfigurationComponent implements OnInit {
         this.data.models.forEach((model) => {
             model.outputs.forEach((output) => {
                 const key = `${model.name}_${output.name}`;
-                controls[key] = new FormControl(this.data.configuration[key]);
+                controls[key] = new FormControl(this.data.configuration[key] || false);
             });
         });
-        controls["leftWing"] = new FormControl(this.data.configuration["leftWing"]);
-        controls["rightWing"] = new FormControl(this.data.configuration["rightWing"]);
+        controls["leftWing"] = new FormControl(this.data.configuration["leftWing"] || false);
+        controls["rightWing"] = new FormControl(this.data.configuration["rightWing"] || false);
 
         this._nativeFormGroup = new FormGroup({ ...controls });
         this.formManager.upsert(this._formName, this._nativeFormGroup);
