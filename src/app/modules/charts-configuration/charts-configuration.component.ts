@@ -6,7 +6,12 @@ import {TuiCheckboxLabeledModule} from "@taiga-ui/kit";
 import {SGChartsConfigurationDialogData} from "./model/charts-configuration.model";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {NgFormsManager} from "@ngneat/forms-manager";
+import {SGChartsConfiguration} from "../../models/core/charts-configuration.model";
+import {SGDataService} from "../../services/data.service";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {tap} from "rxjs";
 
+@UntilDestroy()
 @Component({
     selector: "sg-charts-configuration",
     templateUrl: "./charts-configuration.component.html",
@@ -28,8 +33,9 @@ export class SGChartsConfigurationComponent implements OnInit {
     private hostClass: boolean = true;
 
     constructor(@Inject(POLYMORPHEUS_CONTEXT)
-                private readonly context: TuiDialogContext<void, SGChartsConfigurationDialogData>,
-                private formManager: NgFormsManager) {
+                private readonly context: TuiDialogContext<SGChartsConfiguration, SGChartsConfigurationDialogData>,
+                private formManager: NgFormsManager,
+                private dataService: SGDataService) {
     }
 
     public ngOnInit(): void {
@@ -37,29 +43,38 @@ export class SGChartsConfigurationComponent implements OnInit {
     }
 
     public _onSaveClick(): void {
-        this.getFormValue(this._formName);
-        this.formManager.upsert("chartsConfigForm", this._nativeFormGroup);
+        const formValue = this.getFormValue(this._formName);
 
-        this.context.completeWith();
+        this.dataService.updateChartsConfiguration(formValue)
+            .pipe(
+                tap((response: SGChartsConfiguration) => {
+                    this.formManager.destroy(this._formName);
+                    this.formManager.unsubscribe(this._formName);
+                    this.context.completeWith(response);
+                }),
+                untilDestroyed(this)
+            )
+            .subscribe();
     }
 
     public _onCancelClick(): void {
-        this.context.completeWith();
+        this.context.completeWith(null);
     }
 
-    private getFormValue(formName: string): void {
-
+    private getFormValue(formName: string): SGChartsConfiguration {
+        return this.formManager.getControl(formName).value;
     }
 
     private initializeGroup(): void {
         const controls: Record<string, FormControl> = {};
         this.data.models.forEach((model) => {
             model.outputs.forEach((output) => {
-               controls[`${model.name}_${output.name}`] = new FormControl(false);
+                const key = `${model.name}_${output.name}`;
+                controls[key] = new FormControl(this.data.configuration[key]);
             });
         });
-        controls["leftWing"] = new FormControl(false);
-        controls["rightWing"] = new FormControl(false);
+        controls["leftWing"] = new FormControl(this.data.configuration["leftWing"]);
+        controls["rightWing"] = new FormControl(this.data.configuration["rightWing"]);
 
         this._nativeFormGroup = new FormGroup({ ...controls });
         this.formManager.upsert(this._formName, this._nativeFormGroup);

@@ -5,6 +5,7 @@ import {SGModelsOutput, SGModelUpdateRequest} from "../models/core/models-status
 import {SGModelName, SGModelOrientation} from "../models/core/app.model";
 import {SGServerApplicationStatus, SGServerStatus} from "../models/core/server.model";
 import {SGApplicationStartModels, SGApplicationStartSingleRequest} from "../models/core/application-start.model";
+import {SGChartsConfiguration} from "../models/core/charts-configuration.model";
 
 @Injectable({
     providedIn: "root"
@@ -46,5 +47,13 @@ export class SGDataService {
 
     public getInitialConditions(): Observable<SGApplicationStartModels> {
         return this.http.get<SGApplicationStartModels>("http://localhost:3000/api/initial-conditions");
+    }
+
+    public getChartsConfiguration(): Observable<SGChartsConfiguration> {
+        return this.http.get<SGChartsConfiguration>("http://localhost:3000/api/charts-configuration");
+    }
+
+    public updateChartsConfiguration(data: SGChartsConfiguration): Observable<SGChartsConfiguration> {
+        return this.http.post<SGChartsConfiguration>("http://localhost:3000/api/charts-configuration", data);
     }
 }

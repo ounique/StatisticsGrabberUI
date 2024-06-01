@@ -26,6 +26,26 @@ export class SGMainController {
     }
 
     @SGMockRequest({
+        path: "/charts-configuration",
+        method: SGMockControllerMethod.GET
+    })
+    private getChartsConfiguration(request: Request, response: Response): void {
+        response.status(200)
+            .json(this.mockMainService.getChartsConfiguration());
+    }
+
+    @SGMockRequest({
+        path: "/charts-configuration",
+        method: SGMockControllerMethod.POST
+    })
+    private updateChartsConfiguration(request: Request, response: Response): void {
+        const data = request.body;
+
+        response.status(200)
+            .json(this.mockMainService.updateChartsConfiguration(data));
+    }
+
+    @SGMockRequest({
         path: "/output",
         method: SGMockControllerMethod.GET
     })

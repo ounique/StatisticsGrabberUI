@@ -3,7 +3,7 @@ import {CommonModule} from "@angular/common";
 import {SGModelsOutput} from "../../models/core/models-status.model";
 import {SGAppQuery} from "../../state/app.query";
 import {SGChartWrapperConfig} from "../chart-wrapper/models/chart-wrapper.model";
-import {SGModelName, SGModelPropertyConfig, SGModelsConfig} from "../../models/core/app.model";
+import {SGModelName, SGModelOrientation, SGModelPropertyConfig, SGModelsConfig} from "../../models/core/app.model";
 import {SGChartWrapperComponent} from "../chart-wrapper/chart-wrapper.component";
 import {TuiButtonModule, TuiDialogService, TuiSvgModule} from "@taiga-ui/core";
 import {
@@ -15,17 +15,27 @@ import {SGChartsConfigurationDialogData} from "../charts-configuration/model/cha
 import {TuiLetModule} from "@taiga-ui/cdk";
 import {SGServerApplicationStatus} from "../../models/core/server.model";
 import {TuiMarkerIconModule} from "@taiga-ui/kit";
+import {SGDataService} from "../../services/data.service";
+import {BehaviorSubject, finalize, tap} from "rxjs";
+import {SGChartsConfiguration} from "../../models/core/charts-configuration.model";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {SGChartsFilterPipe} from "./pipes/charts-filter.pipe";
 
+@UntilDestroy()
 @Component({
     selector: "sg-charts-grid",
     templateUrl: "./charts-grid.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, SGChartWrapperComponent, TuiButtonModule, TuiLetModule, TuiSvgModule, TuiMarkerIconModule]
+    imports: [CommonModule, SGChartWrapperComponent, TuiButtonModule, TuiLetModule, TuiSvgModule, TuiMarkerIconModule, SGChartsFilterPipe]
 })
 export class SGChartsGridComponent implements OnInit {
 
     public _appStatus$ = this.appQuery.applicationStatus$;
+
+    public _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+    public _chartsConfiguration$: BehaviorSubject<SGChartsConfiguration> = new BehaviorSubject<SGChartsConfiguration>(null);
 
     public _appStatuses: typeof SGServerApplicationStatus = SGServerApplicationStatus;
 
@@ -51,44 +61,74 @@ export class SGChartsGridComponent implements OnInit {
 
     constructor(private appQuery: SGAppQuery,
                 @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
-                @Inject(Injector) private readonly injector: Injector) {
+                @Inject(Injector) private readonly injector: Injector,
+                private dataService: SGDataService) {
     }
 
     public ngOnInit(): void {
+        this.subscribeToGetChartsConfiguration();
+
         this._chartConfigs = this.getChartConfigs();
     }
 
     public _onChangeViewClick(): void {
         this.dialogs
-            .open<SGGenericModelDeviceViewFormData>(
+            .open<SGChartsConfiguration>(
                 new PolymorpheusComponent(SGChartsConfigurationComponent, this.injector),
                 {
                     data: <SGChartsConfigurationDialogData>{
-                        models: this.appQuery.getValue().config.models
+                        models: this.appQuery.getValue().config.models,
+                        configuration: this._chartsConfiguration$.value
                     },
                     dismissible: true,
                     size: "page"
                 }
+            )
+            .pipe(
+                tap((response: SGChartsConfiguration) => {
+                    if (response) {
+                        this._chartsConfiguration$.next(response);
+                    }
+                })
             )
             .subscribe();
     }
 
     private getChartConfigs(): SGChartWrapperConfig[] {
         return this.appQuery.getValue().config.models.reduce((arr: SGChartWrapperConfig[], model: SGModelsConfig) => {
-            if (model.name === SGModelName.BMS_MODEL) {
-                arr.push(
-                    ...model.outputs.map((item: SGModelPropertyConfig) => {
-                        return {
-                            fieldKey: item.name,
-                            description: item.description,
-                            modelFieldKey: this.modelNameMapping[model.name],
-                            units: item.units,
-                            seriesPrefix: this.modelSeriesPrefixMapping[model.name]
-                        };
-                    })
-                )
-            }
+            model.outputs.forEach((item: SGModelPropertyConfig) => {
+                arr.push({
+                    fieldKey: item.name,
+                    description: item.description,
+                    modelFieldKey: this.modelNameMapping[model.name],
+                    units: item.units,
+                    seriesPrefix: this.modelSeriesPrefixMapping[model.name],
+                    orientation: SGModelOrientation.LEFT_WING
+                });
+                arr.push({
+                    fieldKey: item.name,
+                    description: item.description,
+                    modelFieldKey: this.modelNameMapping[model.name],
+                    units: item.units,
+                    seriesPrefix: this.modelSeriesPrefixMapping[model.name],
+                    orientation: SGModelOrientation.RIGHT_WING
+                });
+            });
+
             return arr;
         }, []);
+    }
+
+    private subscribeToGetChartsConfiguration(): void {
+        this._isLoading$.next(true);
+        this.dataService.getChartsConfiguration()
+            .pipe(
+                tap((response: SGChartsConfiguration) => {
+                    this._chartsConfiguration$.next(response);
+                }),
+                finalize(() => this._isLoading$.next(false)),
+                untilDestroyed(this)
+            )
+            .subscribe();
     }
 }

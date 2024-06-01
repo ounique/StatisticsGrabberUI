@@ -35,22 +35,23 @@
     >
         Изменить отображение
     </button>
-    <div class="sg-charts-grid__container">
+    <ng-container
+        *tuiLet="_chartConfigs | sgChartsFilter: (_chartsConfiguration$ | async) as chartsConfig"
+    >
+        <div
+        class="sg-charts-grid__container"
+        *ngIf="chartsConfig?.length; else noDataTemplate;"
+    >
         <ng-container
-            *ngFor="let config of _chartConfigs;"
+            *ngFor="let config of chartsConfig;"
         >
             <sg-chart-wrapper
                 class="sg-charts-grid__chart"
-                orientation="leftWing"
-                [config]="config"
-                [data]="data"
-            ></sg-chart-wrapper>
-            <sg-chart-wrapper
-                class="sg-charts-grid__chart"
-                orientation="rightWing"
+                [orientation]="config.orientation"
                 [config]="config"
                 [data]="data"
             ></sg-chart-wrapper>
         </ng-container>
     </div>
+    </ng-container>
 </ng-template>

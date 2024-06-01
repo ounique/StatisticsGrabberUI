@@ -1,5 +1,6 @@
 import {ChartConfiguration} from "chart.js";
 import {SGModelsWing} from "../../../models/core/models-status.model";
+import {SGModelOrientation} from "../../../models/core/app.model";
 
 export type SGChartWrapperConfig = Readonly<{
     modelFieldKey: keyof SGModelsWing;
@@ -7,6 +8,7 @@ export type SGChartWrapperConfig = Readonly<{
     description: string;
     units: string;
     seriesPrefix: string;
+    orientation: SGModelOrientation;
 }>;
 
 export const SG_CHART_WRAPPER_DEFAULT_OPTIONS: ChartConfiguration["options"] = {

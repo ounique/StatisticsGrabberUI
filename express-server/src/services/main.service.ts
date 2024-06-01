@@ -21,10 +21,13 @@ import {
 import {SGModelName, SGModelOrientation} from "../../../src/app/models/core/app.model";
 import {SGServerApplicationStatus} from "../../../src/app/models/core/server.model";
 import {SGApplicationStartModels} from "../../../src/app/models/core/application-start.model";
+import {SGChartsConfiguration} from "../../../src/app/models/core/charts-configuration.model";
 
 export class SGMockMainService {
 
     private applicationStatus: SGServerApplicationStatus = SGServerApplicationStatus.IDLE;
+
+    private chartsConfiguration: Record<string, boolean> = {};
 
     private applicationStatusTransitions: Record<SGServerApplicationStatus, SGServerApplicationStatus> = {
         [SGServerApplicationStatus.IDLE]: SGServerApplicationStatus.WAITING_START,
@@ -40,6 +43,14 @@ export class SGMockMainService {
     };
 
     private startProps: SGApplicationStartModels = this.getFirstModelStartProps();
+
+    public getChartsConfiguration(): SGChartsConfiguration {
+        return this.chartsConfiguration;
+    }
+
+    public updateChartsConfiguration(data: SGChartsConfiguration): SGChartsConfiguration {
+        return this.chartsConfiguration = data;
+    }
 
     public getModelStartProps(): SGApplicationStartModels {
         return this.startProps;
