@@ -83,15 +83,22 @@ export class SGModelsParametersConfigurationComponent implements OnInit {
         this.subscribeToGetInitialConditions();
     }
 
-    public _onStartClick(): void {
+    private generateWingData(): SGApplicationStartModelsWingData {
         const bmsModel = this.initialConditions.leftWing.bms[0];
         const ruModel = this.initialConditions.leftWing.ru[0];
         const impellerModel = this.initialConditions.leftWing.impellers[0];
 
+        return {
+            bms: Array(this.initialConditions.leftWing.bms.length).fill(bmsModel),
+            ru: Array(this.initialConditions.leftWing.ru.length).fill(ruModel),
+            impellers: Array(this.initialConditions.leftWing.impellers.length).fill(impellerModel),
+        }
+    }
+
+    public _onStartClick(): void {
         this.applicationStatusService.startApplication({
-            bms: bmsModel,
-            ru: ruModel,
-            impeller: impellerModel
+            leftWing: this.generateWingData(),
+            rightWing: this.generateWingData()
         })
             .pipe(
                 tap(() => this.context.completeWith()),
@@ -114,6 +121,7 @@ export class SGModelsParametersConfigurationComponent implements OnInit {
 
     private subscribeToGetInitialConditions(): void {
         this._isLoading$.next(true);
+
         this.dataService.getInitialConditions()
             .pipe(
                 tap((response) => {

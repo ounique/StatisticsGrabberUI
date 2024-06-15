@@ -41,7 +41,7 @@ export class SGChartWrapperComponent implements OnChanges {
         datasets: []
     };
 
-    private readonly MAXIMUM_POINTS_NUMBERS_INTERVAL: number = 20;
+    private readonly MAXIMUM_POINTS_NUMBERS_INTERVAL: number = 2000;
 
     private readonly OFFSET_POINTS_TO_REMOVE: number[] = Array(10).fill(0);
 

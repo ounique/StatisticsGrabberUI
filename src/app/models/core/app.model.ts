@@ -32,9 +32,9 @@ export interface SGModelPropertyConfig {
 }
 
 export enum SGModelName {
-    BMS_MODEL = "BMSModel",
-    RU_MODEL = "RUModel",
-    IMPELLER_MODEL = "ImpellerModel"
+    BMS_MODEL = "BMS",
+    RU_MODEL = "RU",
+    IMPELLER_MODEL = "Imp"
 }
 
 export enum SGModelOrientation {

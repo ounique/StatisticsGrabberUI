@@ -38,26 +38,27 @@
     </div>
 </div>
 <div class="sg-generic-model-device-view__content"
+     [class._switched-off]="!data?.isSwitchedOn"
      *ngIf="data; else noData">
     <sg-parameters-panel
-        *ngIf="_inputParametersPanelConfig?.parameters?.length"
+        *ngIf="_inputParametersPanelConfig?.parameters?.length && data?.input"
         [title]="'Вход'"
         [config]="_inputParametersPanelConfig"
-        [value]="data.input"
+        [value]="data?.input"
     >
     </sg-parameters-panel>
     <sg-parameters-panel
-        *ngIf="_propertiesParametersPanelConfig?.parameters?.length"
+        *ngIf="_propertiesParametersPanelConfig?.parameters?.length && data?.parameters"
         [title]="'Параметры'"
         [config]="_propertiesParametersPanelConfig"
-        [value]="data.parameters"
+        [value]="data?.parameters"
     >
     </sg-parameters-panel>
     <sg-parameters-panel
-        *ngIf="_outputParametersPanelConfig?.parameters?.length"
+        *ngIf="_outputParametersPanelConfig?.parameters?.length && data?.output"
         [title]="'Выходы'"
         [config]="_outputParametersPanelConfig"
-        [value]="data.output"
+        [value]="data?.output"
     >
     </sg-parameters-panel>
 </div>

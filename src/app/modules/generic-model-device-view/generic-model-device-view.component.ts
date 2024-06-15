@@ -9,10 +9,8 @@ import {
     OnChanges,
     SimpleChanges
 } from "@angular/core";
-import {SGDataService} from "../../services/data.service";
 import {SGAppQuery} from "../../state/app.query";
 import {
-    TuiAlertService,
     TuiButtonModule,
     TuiDataListModule,
     TuiDialogService,
@@ -37,6 +35,9 @@ import {
     SGGenericModelDeviceViewFormData
 } from "./components/generic-model-device-view-form.component";
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
+import {SGDataService} from "../../services/data.service";
+import {TUI_PROMPT} from "@taiga-ui/kit";
+import {EMPTY, switchMap} from "rxjs";
 
 @Component({
     selector: "sg-generic-model-device-view",
@@ -84,6 +85,10 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
         {
             id: SGGenericModelDeviceViewMenuItemType.INPUT_PARAMS_CHANGE,
             text: "Изменить входы/параметры"
+        },
+        {
+            id: SGGenericModelDeviceViewMenuItemType.EMIT_EMERGENCY,
+            text: "Выключить/Включить"
         }
     ];
 
@@ -92,6 +97,7 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
 
     constructor(@Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
                 @Inject(Injector) private readonly injector: Injector,
+                private dataService: SGDataService,
                 private appQuery: SGAppQuery) {
     }
 
@@ -102,21 +108,32 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
     }
 
     public _onMenuItemClick(id: SGGenericModelDeviceViewMenuItemType): void {
+        if (id === SGGenericModelDeviceViewMenuItemType.INPUT_PARAMS_CHANGE) {
+            this.showChangeParametersDialog();
+        } else if (id === SGGenericModelDeviceViewMenuItemType.EMIT_EMERGENCY) {
+            this.emitEmergency();
+        }
+    }
+
+    private emitEmergency(): void {
         this.dialogs
-            .open<SGGenericModelDeviceViewFormData>(
-                new PolymorpheusComponent(SGGenericModelDeviceViewFormComponent, this.injector),
-                {
-                    data: <SGGenericModelDeviceViewFormData>{
-                        data: this.data,
-                        inputs: this._inputParametersPanelConfig,
-                        parameters: this._propertiesParametersPanelConfig,
-                        number: this.number,
-                        wing: this.wing,
-                        name: this.modelName
-                    },
-                    dismissible: true,
-                    label: "Входы/Параметры"
-                }
+            .open<boolean>(TUI_PROMPT, {
+                label: "Включение/Выключение",
+                data: {
+                    content: 'Вы уверены, что хотите остановить/запустить модель?',
+                    yes: 'Да',
+                    no: 'Нет',
+                },
+            })
+            .pipe(
+                switchMap((response: boolean) => {
+                    if (response) {
+                        return this.dataService.changeDeviceAvailability(`${this.wing}_${this.modelName}_${this.number}`)
+                            .pipe();
+                    }
+
+                    return EMPTY;
+                })
             )
             .subscribe();
     }
@@ -146,5 +163,25 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
                 };
             })
         };
+    }
+
+    private showChangeParametersDialog(): void {
+        this.dialogs
+            .open<SGGenericModelDeviceViewFormData>(
+                new PolymorpheusComponent(SGGenericModelDeviceViewFormComponent, this.injector),
+                {
+                    data: <SGGenericModelDeviceViewFormData>{
+                        data: this.data,
+                        inputs: this._inputParametersPanelConfig,
+                        parameters: this._propertiesParametersPanelConfig,
+                        number: this.number,
+                        wing: this.wing,
+                        name: this.modelName
+                    },
+                    dismissible: true,
+                    label: "Входы/Параметры"
+                }
+            )
+            .subscribe();
     }
 }

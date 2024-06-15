@@ -39,11 +39,13 @@
         }
 
         &-popup {
+            @width: 256px;
+
             display: flex;
             flex-wrap: wrap;
             flex: 1 1 auto;
             overflow: hidden;
-            max-width: 240px;
+            width: @width;
 
             &-title {
                 display: flex;
@@ -58,7 +60,7 @@
                 position: relative;
                 display: flex;
                 align-items: center;
-                width: calc(240px / 2 - 8px);
+                width: calc(@width / 2 - 8px);
                 padding: 4px 8px;
                 margin: 4px;
                 background: var(--tui-base-02);

@@ -7,7 +7,7 @@ import {SGAppQuery} from "../../../state/app.query";
 @Injectable()
 export class SGOverviewService {
 
-    private readonly isMultipleMode: boolean = false;
+    private readonly isMultipleMode: boolean = true;
 
     constructor(private dataService: SGDataService,
                 private appQuery: SGAppQuery) {

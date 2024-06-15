@@ -13,6 +13,9 @@ export type SGChartWrapperConfig = Readonly<{
 
 export const SG_CHART_WRAPPER_DEFAULT_OPTIONS: ChartConfiguration["options"] = {
     elements: {
+        point:{
+            radius: 0
+        },
         line: {
             tension: 0
         }

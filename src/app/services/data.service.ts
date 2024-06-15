@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {SGModelsOutput, SGModelUpdateRequest} from "../models/core/models-status.model";
 import {SGModelName, SGModelOrientation} from "../models/core/app.model";
 import {SGServerApplicationStatus, SGServerStatus} from "../models/core/server.model";
-import {SGApplicationStartModels, SGApplicationStartSingleRequest} from "../models/core/application-start.model";
+import {SGApplicationStartModels} from "../models/core/application-start.model";
 import {SGChartsConfiguration} from "../models/core/charts-configuration.model";
 import {SGAppQuery} from "../state/app.query";
 
@@ -26,25 +26,15 @@ export class SGDataService {
     }
 
     public updateModelProps(data: SGModelUpdateRequest, wing: SGModelOrientation, number: number, model: SGModelName): Observable<void> {
-        return this.http.post<void>(this.appQuery.getValue().config.server.url + "/api/modelConfiguration:update", data, {
-            params: {
-                wing: wing,
-                number: number,
-                modelType: model
-            }
-        });
+        return this.http.post<void>(this.appQuery.getValue().config.server.url + "/api/updateDeviceInputParameters/" + `${wing}_${model}_${number}`, data);
     }
 
-    public statusApplication(): Observable<SGServerApplicationStatus> {
-        return this.http.get<SGServerApplicationStatus>(this.appQuery.getValue().config.server.url + "/api/application:status");
+    public startApplication(data: SGApplicationStartModels): Observable<SGServerStatus> {
+        return this.http.post<SGServerStatus>(this.appQuery.getValue().config.server.url + "/api/start", data);
     }
 
-    public startApplication(data: SGApplicationStartSingleRequest): Observable<SGServerApplicationStatus> {
-        return this.http.post<SGServerApplicationStatus>(this.appQuery.getValue().config.server.url + "/api/application:start", data);
-    }
-
-    public stopApplication(): Observable<SGServerApplicationStatus> {
-        return this.http.post<SGServerApplicationStatus>(this.appQuery.getValue().config.server.url + "/api/application:stop", {});
+    public stopApplication(): Observable<SGServerStatus> {
+        return this.http.post<SGServerStatus>(this.appQuery.getValue().config.server.url + "/api/stop", {});
     }
 
     public getInitialConditions(): Observable<SGApplicationStartModels> {
@@ -57,5 +47,9 @@ export class SGDataService {
 
     public updateChartsConfiguration(data: SGChartsConfiguration): Observable<SGChartsConfiguration> {
         return this.http.post<SGChartsConfiguration>(this.appQuery.getValue().config.server.url + "/api/charts-configuration", data);
+    }
+
+    public changeDeviceAvailability(device: string): Observable<unknown> {
+        return this.http.post<SGChartsConfiguration>(this.appQuery.getValue().config.server.url + "/api/changeDeviceAvailability/" + device, "{}");
     }
 }

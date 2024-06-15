@@ -8,8 +8,8 @@ export enum SGServerApplicationStatus {
 
 export interface SGServerStatus {
     readonly applicationStatus: SGServerApplicationStatus;
-    readonly server1: boolean;
-    readonly server2: boolean;
-    readonly server3: boolean;
-    readonly server4: boolean;
+    readonly apiGateway: boolean;
+    readonly leftWing: boolean;
+    readonly rightWing: boolean;
+    readonly system: boolean;
 }

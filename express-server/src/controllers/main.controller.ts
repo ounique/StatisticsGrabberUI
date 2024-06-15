@@ -18,10 +18,10 @@ export class SGMainController {
     private healthCheck(request: Request, response: Response): void {
         response.status(200).json(<SGServerStatus>{
             applicationStatus: this.mockMainService.getApplicationStatus(),
-            server1: true,
-            server2: true,
-            server3: true,
-            server4: true
+            apiGateway: true,
+            leftWing: true,
+            rightWing: true,
+            system: true
         })
     }
 
@@ -58,26 +58,36 @@ export class SGMainController {
     }
 
     @SGMockRequest({
-        path: "/modelConfiguration[:]update",
+        path: "/updateDeviceInputParameters/:device",
         method: SGMockControllerMethod.POST
     })
-    private updateModelParameters(request: Request, response: Response): void {
-        const wing = request.query.wing as string;
-        const modelType = request.query.modelType as string;
-        const number = request.query.number as string;
+    private updateDeviceInputParameters(request: Request, response: Response): void {
         const data = request.body;
+        const [wing, modelName, n] = request.params.device.split("_");
 
         this.mockMainService.updateModelParameters(
-            modelType as SGModelName,
+            modelName as SGModelName,
             wing as SGModelOrientation,
-            Number(number),
+            Number(n),
             data
         );
+
+        response.status(200).json();
+    }
+
+
+    @SGMockRequest({
+        path: "/changeDeviceAvailability/:device",
+        method: SGMockControllerMethod.POST
+    })
+    private changeDeviceAvailability(request: Request, response: Response): void {
+        const [wing, modelName, n] = request.params.device.split("_");
+        this.mockMainService.updateDeviceAvailability(modelName as SGModelName, wing as SGModelOrientation, Number(n))
         response.status(200).json();
     }
 
     @SGMockRequest({
-        path: "/application[:]start",
+        path: "/start",
         method: SGMockControllerMethod.POST
     })
     private startApplication(request: Request, response: Response): void {
@@ -85,7 +95,7 @@ export class SGMainController {
     }
 
     @SGMockRequest({
-        path: "/application[:]stop",
+        path: "/stop",
         method: SGMockControllerMethod.POST
     })
     private stopApplication(request: Request, response: Response): void {
