@@ -7,6 +7,7 @@ import {TuiMarkerIconModule} from "@taiga-ui/kit";
 import {SGServerApplicationStatus} from "../../models/core/server.model";
 import {TuiLetModule} from "@taiga-ui/cdk";
 import {SGAppQuery} from "../../state/app.query";
+import {SGGenericModel} from "../../models/core/generic-model.model";
 
 @Component({
     selector: "sg-devices-grid",
@@ -32,6 +33,10 @@ export class SGDevicesGridComponent {
     private hostClass: boolean = true;
 
     constructor(private appQuery: SGAppQuery) {
+    }
+
+    public _trackByFn(index: number, data: SGGenericModel): string {
+        return index.toString();
     }
 
 }

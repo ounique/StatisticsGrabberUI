@@ -57,7 +57,7 @@
     <div class="sg-devices-grid__row">
         <div class="sg-devices-grid__row-battery-ru">
             <sg-generic-model-device-view
-                *ngFor="let modelData of wingData.ru; let idx=index;"
+                *ngFor="let modelData of wingData.ru; let idx=index; trackBy: _trackByFn;"
                 [modelName]="_modelName.RU_MODEL"
                 [number]="idx"
                 [wing]="wing"
@@ -65,11 +65,10 @@
                     title: 'РУ #' + (idx + 1),
                     icon: 'tuiIconMinimize'
                 }"
-                [data]="modelData"
             ></sg-generic-model-device-view>
             <sg-generic-model-device-view
                 class="sg-devices-grid__row-battery-ru__battery"
-                *ngFor="let modelData of wingData.bms; let idx=index;"
+                *ngFor="let modelData of wingData.bms; let idx=index; trackBy: _trackByFn;"
                 [modelName]="_modelName.BMS_MODEL"
                 [number]="idx"
                 [wing]="wing"
@@ -77,12 +76,11 @@
                     title: 'Батарея #' + (idx + 1),
                     icon: 'tuiIconBatteryCharging'
                 }"
-                [data]="modelData"
             ></sg-generic-model-device-view>
         </div>
         <div class="sg-devices-grid__row-impellers">
             <sg-generic-model-device-view
-                *ngFor="let modelData of wingData.impellers; let idx=index;"
+                *ngFor="let modelData of wingData.impellers; let idx=index; trackBy: _trackByFn;"
                 [modelName]="_modelName.IMPELLER_MODEL"
                 [number]="idx"
                 [wing]="wing"
@@ -90,7 +88,6 @@
                     title: 'Импеллер #' + (idx + 1),
                     icon: 'tuiIconZap'
                 }"
-                [data]="modelData"
             ></sg-generic-model-device-view>
         </div>
     </div>

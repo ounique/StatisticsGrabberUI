@@ -7,6 +7,7 @@ import {
     Injector,
     Input,
     OnChanges,
+    OnInit,
     SimpleChanges
 } from "@angular/core";
 import {SGAppQuery} from "../../state/app.query";
@@ -21,7 +22,13 @@ import {
     SGParametersPanelConfiguration,
     SGParametersPanelParameter
 } from "../parameters-panel/model/parameters-panel.model";
-import {SGModelName, SGModelOrientation, SGModelPropertyConfig, SGModelsConfig} from "../../models/core/app.model";
+import {
+    SG_MODEL_NAME_TO_SERVER_FIELD_MAPPING,
+    SGModelName,
+    SGModelOrientation,
+    SGModelPropertyConfig,
+    SGModelsConfig
+} from "../../models/core/app.model";
 import {SGParametersPanelModule} from "../parameters-panel/parameters-panel.module";
 import {
     SGGenericModelDeviceViewConfig,
@@ -37,7 +44,10 @@ import {
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {SGDataService} from "../../services/data.service";
 import {TUI_PROMPT} from "@taiga-ui/kit";
-import {EMPTY, switchMap} from "rxjs";
+import {BehaviorSubject, EMPTY, switchMap, tap} from "rxjs";
+import {SGOverviewService} from "../overview/services/overview.service";
+import {SGModelsOutput} from "../../models/core/models-status.model";
+import {TuiLetModule} from "@taiga-ui/cdk";
 
 @Component({
     selector: "sg-generic-model-device-view",
@@ -50,13 +60,14 @@ import {EMPTY, switchMap} from "rxjs";
         SGParametersPanelModule,
         TuiHostedDropdownModule,
         TuiButtonModule,
-        TuiDataListModule
+        TuiDataListModule,
+        TuiLetModule
     ],
     providers: [
         SGGenericModelDeviceViewFormService
     ]
 })
-export class SGGenericModelDeviceViewComponent implements OnChanges {
+export class SGGenericModelDeviceViewComponent implements OnChanges, OnInit {
 
     @Input()
     public modelName: SGModelName;
@@ -68,10 +79,9 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
     public wing: SGModelOrientation;
 
     @Input()
-    public data: SGGenericModel;
-
-    @Input()
     public config: SGGenericModelDeviceViewConfig;
+
+    public _deviceData$: BehaviorSubject<SGGenericModel> = new BehaviorSubject<SGGenericModel>(null);
 
     public _initializationError: boolean;
 
@@ -98,13 +108,18 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
     constructor(@Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
                 @Inject(Injector) private readonly injector: Injector,
                 private dataService: SGDataService,
-                private appQuery: SGAppQuery) {
+                private appQuery: SGAppQuery,
+                private overviewService: SGOverviewService) {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes["data"].currentValue) {
+        if (changes["modelName"].currentValue) {
             this.initModel();
         }
+    }
+
+    public ngOnInit(): void {
+        this.subscribeToDeviceData();
     }
 
     public _onMenuItemClick(id: SGGenericModelDeviceViewMenuItemType): void {
@@ -171,7 +186,7 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
                 new PolymorpheusComponent(SGGenericModelDeviceViewFormComponent, this.injector),
                 {
                     data: <SGGenericModelDeviceViewFormData>{
-                        data: this.data,
+                        data: this._deviceData$.value,
                         inputs: this._inputParametersPanelConfig,
                         parameters: this._propertiesParametersPanelConfig,
                         number: this.number,
@@ -181,6 +196,18 @@ export class SGGenericModelDeviceViewComponent implements OnChanges {
                     dismissible: true,
                     label: "Входы/Параметры"
                 }
+            )
+            .subscribe();
+    }
+
+    private subscribeToDeviceData(): void {
+        this.overviewService.getModelsOutput()
+            .pipe(
+                tap((data: SGModelsOutput) => {
+                    this._deviceData$.next(
+                        data[this.wing][SG_MODEL_NAME_TO_SERVER_FIELD_MAPPING[this.modelName]][this.number]
+                    );
+                })
             )
             .subscribe();
     }

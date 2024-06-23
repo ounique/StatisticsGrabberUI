@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve StatisticsGrabberUI --open --port 4205",
+        "start": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve StatisticsGrabberUI --open --port 4205",
         "start:mock": "concurrently -s first --names \"mockserver,start\" -p \"{name}\" -k \"npm run mock:server\" \"npm run start\"",
         "mock:server": "ts-node -p express-server/tsconfig.json && nodemon --watch express-server express-server/src/index.ts",
         "build": "ng build",

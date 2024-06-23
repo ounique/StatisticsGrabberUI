@@ -1,3 +1,5 @@
+import {SGModelsWing} from "./models-status.model";
+
 export interface SGConfig {
     readonly defaultTimeout: number;
     readonly availableTimeouts: number[];
@@ -41,3 +43,9 @@ export enum SGModelOrientation {
     LEFT_WING = "leftWing",
     RIGHT_WING = "rightWing"
 }
+
+export const SG_MODEL_NAME_TO_SERVER_FIELD_MAPPING: Record<SGModelName, keyof SGModelsWing> = {
+    [SGModelName.RU_MODEL]: "ru",
+    [SGModelName.IMPELLER_MODEL]: "impellers",
+    [SGModelName.BMS_MODEL]: "bms"
+};
